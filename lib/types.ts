@@ -55,6 +55,16 @@ export type StickerType =
   | 'weekly_recap_ring'
   | 'icon_badge';
 
+export type StyleVariant =
+  | 'default'
+  | 'neon'
+  | 'cyberpunk'
+  | 'retro_gold'
+  | 'monochrome'
+  | 'pastel'
+  | 'vivid_red'
+  | 'ocean_blue';
+
 export interface StickerStyle {
   textColor: string;
   backgroundColor: string;
@@ -64,6 +74,7 @@ export interface StickerStyle {
   fontSize: number;
   opacity: number;
   borderRadius: number;
+  variant?: StyleVariant;
 }
 
 export interface StickerInstance {

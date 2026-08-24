@@ -54,7 +54,7 @@ export default function Home() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  const handleAddSticker = (type: StickerType) => {
+  const handleAddSticker = (type: StickerType, customStyle?: any) => {
     const newSticker: StickerInstance = {
       id: `sticker_${Date.now()}`,
       type,
@@ -64,7 +64,7 @@ export default function Home() {
       height: 100,
       rotation: 0,
       zIndex: stickers.length + 1,
-      style: DEFAULT_STYLES[type] || DEFAULT_STYLES.receipt,
+      style: customStyle || DEFAULT_STYLES[type] || DEFAULT_STYLES.receipt,
     };
     setStickers((prev) => [...prev, newSticker]);
     setSelectedId(newSticker.id);

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ActivityMetrics, StickerStyle, StickerType } from '@/lib/types';
-import { Flame, Heart, MapPin, Zap, Check, Phone, Video, AlertTriangle, Trophy, Music, Disc, Plane, Activity, Radio, Star, Award, Compass, Shield } from 'lucide-react';
+import { Flame, Heart, MapPin, Zap, Check, Phone, Video, AlertTriangle, Trophy, Music, Disc, Plane, Activity, Radio, Star, Award, Compass, Shield, Footprints, Bike, Crown, Timer, Target, BarChart, TrendingUp } from 'lucide-react';
 
 interface TemplateProps {
   metrics: ActivityMetrics;
@@ -10,7 +10,6 @@ interface TemplateProps {
   onEditField?: (field: string, value: string) => void;
 }
 
-// Editable field helper
 function EditableField({
   value,
   onSave,
@@ -66,11 +65,11 @@ function EditableField({
 // 1. Red Bold Header
 export function RedBoldHeaderSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 text-center font-black uppercase text-red-600 tracking-tight leading-tight select-none">
-      <div className="text-3xl">MON</div>
+    <div className="p-3 text-center font-black uppercase tracking-tight leading-tight select-none" style={{ color: style.textColor }}>
+      <div className="text-3xl" style={{ color: style.accentColor || '#ef4444' }}>MON</div>
       <div className="text-xl text-white"><EditableField value={metrics.title} onSave={(v) => onEditField?.('title', v)} /></div>
       <div className="text-2xl mt-1"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> {metrics.unit}</div>
-      <div className="text-xs text-zinc-300 font-mono mt-1"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      <div className="text-xs opacity-80 font-mono mt-1"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
     </div>
   );
 }
@@ -78,7 +77,7 @@ export function RedBoldHeaderSticker({ metrics, style, onEditField }: TemplatePr
 // 2. Elevation Gradient Curve
 export function ElevationGradientSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 p-4 rounded-xl bg-gradient-to-b from-zinc-900/90 to-black/95 text-white font-mono text-center border border-zinc-800">
+    <div className="w-64 p-4 rounded-xl text-white font-mono text-center border border-zinc-800" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <div className="text-xl font-bold mb-2"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM</div>
       <svg className="w-full h-12 stroke-cyan-400 fill-cyan-500/20" viewBox="0 0 100 30">
         <path d="M0,25 Q25,5 50,20 T100,10 L100,30 L0,30 Z" strokeWidth="2" />
@@ -94,7 +93,7 @@ export function ElevationGradientSticker({ metrics, style, onEditField }: Templa
 // 3. Minimal Horizontal
 export function MinimalHorizontalSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="px-4 py-2 bg-black/80 backdrop-blur border border-zinc-800 rounded-full text-white font-mono text-xs flex gap-4 items-center">
+    <div className="px-4 py-2 bg-black/80 backdrop-blur border border-zinc-800 rounded-full text-white font-mono text-xs flex gap-4 items-center" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <span>DIST: <strong className="text-cyan-400"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} />km</strong></span>
       <span>PACE: <strong className="text-yellow-400"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></strong></span>
       <span>TIME: <strong><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></strong></span>
@@ -105,7 +104,7 @@ export function MinimalHorizontalSticker({ metrics, style, onEditField }: Templa
 // 4. Serif Classic
 export function SerifClassicSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-4 bg-zinc-900/90 border border-zinc-700 rounded-xl font-serif text-white text-center w-64">
+    <div className="p-4 bg-zinc-900/90 border border-zinc-700 rounded-xl font-serif text-white text-center w-64" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <div className="text-3xl italic font-bold"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> <span className="text-xl">km</span></div>
       <div className="text-sm italic opacity-90 mt-1">Pace <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • HR <EditableField value={metrics.heartRate} onSave={(v) => onEditField?.('heartRate', v)} /> bpm</div>
       <div className="text-xs opacity-75 mt-2 border-t border-zinc-800 pt-1 font-sans"><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
@@ -116,7 +115,7 @@ export function SerifClassicSticker({ metrics, style, onEditField }: TemplatePro
 // 5. Digital Red LED
 export function DigitalRedLedSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 bg-black border border-red-900 rounded-lg text-red-600 font-led text-center w-56">
+    <div className="p-3 bg-black border border-red-900 rounded-lg text-red-600 font-led text-center w-56" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="text-[10px] text-red-700 uppercase">SCOREBOARD</div>
       <div className="text-3xl my-1 tracking-widest glow-orange"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
       <div className="text-xs tracking-wider text-red-500"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM</div>
@@ -127,7 +126,7 @@ export function DigitalRedLedSticker({ metrics, style, onEditField }: TemplatePr
 // 6. Barcode Ticket
 export function BarcodeTicketSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-4 bg-white text-black font-mono text-xs w-64 rounded shadow-2xl border border-zinc-300">
+    <div className="p-4 bg-white text-black font-mono text-xs w-64 rounded shadow-2xl border border-zinc-300" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="font-extrabold text-sm border-b border-black pb-1 mb-2 flex justify-between">
         <span>DISTANCE</span><span><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</span>
       </div>
@@ -144,7 +143,7 @@ export function BarcodeTicketSticker({ metrics, style, onEditField }: TemplatePr
 // 7. Color Badge
 export function ColorBadgeSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="bg-amber-400 text-black font-black px-4 py-2 rounded-xl text-sm flex gap-3 items-center shadow-lg uppercase">
+    <div className="bg-amber-400 text-black font-black px-4 py-2 rounded-xl text-sm flex gap-3 items-center shadow-lg uppercase" style={{ backgroundColor: style.backgroundColor, color: style.textColor }}>
       <span className="bg-black text-white px-2 py-0.5 rounded text-xs">RUN</span>
       <span><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</span>
       <span><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></span>
@@ -167,7 +166,7 @@ export function RunnerBoldSticker({ metrics, style, onEditField }: TemplateProps
 // 9. Splits List
 export function SplitsListSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-56 p-3 bg-zinc-950 text-white font-mono text-xs rounded-xl border border-zinc-800 space-y-1">
+    <div className="w-56 p-3 bg-zinc-950 text-white font-mono text-xs rounded-xl border border-zinc-800 space-y-1" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <div className="font-bold border-b border-zinc-800 pb-1 text-[10px] text-zinc-400 uppercase">KM Splits Breakdown</div>
       {metrics.splits.slice(0, 6).map((s) => (
         <div key={s.km} className="flex justify-between py-0.5 border-b border-zinc-900">
@@ -182,7 +181,7 @@ export function SplitsListSticker({ metrics, style, onEditField }: TemplateProps
 // 10. Finish Banner
 export function FinishBannerSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 border-2 border-white bg-black text-white p-2 text-center uppercase">
+    <div className="w-64 border-2 border-white bg-black text-white p-2 text-center uppercase" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <div className="bg-white text-black font-extrabold text-xs py-0.5 mb-1">FINISH</div>
       <div className="text-3xl font-black"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
       <div className="text-xs font-mono mt-1 text-zinc-400"><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
@@ -193,7 +192,7 @@ export function FinishBannerSticker({ metrics, style, onEditField }: TemplatePro
 // 11. Receipt Tag
 export function ReceiptSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-4 bg-white text-black font-mono text-xs w-64 rounded-lg shadow-2xl border border-zinc-300">
+    <div className="p-4 bg-white text-black font-mono text-xs w-64 rounded-lg shadow-2xl border border-zinc-300" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="text-center border-b border-dashed border-zinc-400 pb-2 mb-2">
         <h3 className="font-bold text-sm uppercase"><EditableField value={metrics.title} onSave={(v) => onEditField?.('title', v)} /></h3>
         <p className="text-[10px] text-zinc-500"><EditableField value={metrics.date} onSave={(v) => onEditField?.('date', v)} /></p>
@@ -211,7 +210,7 @@ export function ReceiptSticker({ metrics, style, onEditField }: TemplateProps) {
 // 12. JSON Code Tag
 export function JsonCodeSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 bg-zinc-950 text-green-400 font-mono text-xs w-64 rounded-xl border border-zinc-800 shadow-2xl">
+    <div className="p-3 bg-zinc-950 text-green-400 font-mono text-xs w-64 rounded-xl border border-zinc-800 shadow-2xl" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="flex items-center gap-1 mb-2 pb-1 border-b border-zinc-800">
         <div className="w-2 h-2 rounded-full bg-red-500" />
         <div className="w-2 h-2 rounded-full bg-yellow-500" />
@@ -228,7 +227,7 @@ export function JsonCodeSticker({ metrics, style, onEditField }: TemplateProps) 
 // 13. Speedometer Tag
 export function SpeedometerSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 bg-zinc-900 text-white font-sans text-xs w-56 rounded-xl border border-zinc-800 text-center">
+    <div className="p-3 bg-zinc-900 text-white font-sans text-xs w-56 rounded-xl border border-zinc-800 text-center" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <div className="text-[10px] text-red-500 uppercase font-bold tracking-widest">TOP SPEED</div>
       <div className="text-2xl font-black my-1 text-red-400"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM</div>
       <div className="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
@@ -241,7 +240,7 @@ export function SpeedometerSticker({ metrics, style, onEditField }: TemplateProp
 // 14. Splits Histogram Tag
 export function SplitsHistogramSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 bg-zinc-900 text-white font-mono text-xs w-60 rounded-xl border border-zinc-800">
+    <div className="p-3 bg-zinc-900 text-white font-mono text-xs w-60 rounded-xl border border-zinc-800" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <div className="text-[10px] text-zinc-400 mb-2 uppercase">Split Pace Bars</div>
       <div className="flex items-end gap-1.5 h-16 pt-2 border-b border-zinc-800">
         {[60, 80, 45, 90, 70, 85, 55].map((h, i) => (
@@ -256,7 +255,7 @@ export function SplitsHistogramSticker({ metrics, style, onEditField }: Template
 // 15. Polyline Track Tag
 export function PolylineTrackSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-4 bg-black/80 backdrop-blur text-white text-center w-56 rounded-2xl border border-zinc-800">
+    <div className="p-4 bg-black/80 backdrop-blur text-white text-center w-56 rounded-2xl border border-zinc-800" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor }}>
       <svg className="w-full h-20 stroke-cyan-400 fill-none mb-2" viewBox="0 0 100 60">
         <path d="M10,50 L30,10 L70,20 L90,45" strokeWidth="3" strokeLinecap="round" />
         <circle cx="10" cy="50" r="4" className="fill-green-500" />
@@ -271,7 +270,7 @@ export function PolylineTrackSticker({ metrics, style, onEditField }: TemplatePr
 // 16. Windows Error Parody
 export function WindowsErrorSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 bg-zinc-300 text-black border-2 border-white shadow-2xl font-sans text-xs">
+    <div className="w-64 bg-zinc-300 text-black border-2 border-white shadow-2xl font-sans text-xs" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="bg-blue-900 text-white px-2 py-0.5 font-bold flex justify-between text-[10px]">
         <span>System Alert</span>
         <span>X</span>
@@ -293,7 +292,7 @@ export function WindowsErrorSticker({ metrics, style, onEditField }: TemplatePro
 // 17. M-Banking Parody
 export function MBankingSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 p-3 bg-white text-slate-900 rounded-2xl shadow-xl font-sans text-xs border border-emerald-200">
+    <div className="w-64 p-3 bg-white text-slate-900 rounded-2xl shadow-xl font-sans text-xs border border-emerald-200" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="flex justify-between items-center border-b border-zinc-100 pb-1.5 mb-2">
         <span className="font-bold text-emerald-600 text-xs">m-Running</span>
         <span className="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">BERHASIL</span>
@@ -309,7 +308,7 @@ export function MBankingSticker({ metrics, style, onEditField }: TemplateProps) 
 // 18. Getty Stamp Parody
 export function GettyStampSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="px-3 py-1.5 bg-black/80 text-white rounded border border-zinc-700 inline-block font-sans text-xs">
+    <div className="px-3 py-1.5 bg-black/80 text-white rounded border border-zinc-700 inline-block font-sans text-xs" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <span className="font-black tracking-tighter text-sm lowercase border-r border-zinc-600 pr-2 mr-2">sharestudio</span>
       <span>Distance: <EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> km</span>
     </div>
@@ -319,7 +318,7 @@ export function GettyStampSticker({ metrics, style, onEditField }: TemplateProps
 // 19. Cigarette Warning Parody
 export function CigaretteWarningSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 bg-black text-white border-2 border-white p-2.5 text-center uppercase font-sans">
+    <div className="w-64 bg-black text-white border-2 border-white p-2.5 text-center uppercase font-sans" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="bg-red-600 text-white font-extrabold text-[10px] py-0.5 mb-1">PERINGATAN</div>
       <p className="font-black text-sm">TRAINING FOR A MARATHON</p>
       <p className="text-[10px] text-zinc-400 mt-0.5"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM • PACE <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></p>
@@ -330,7 +329,7 @@ export function CigaretteWarningSticker({ metrics, style, onEditField }: Templat
 // 20. iOS iMessage Parody
 export function IMessageSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="max-w-xs px-4 py-2 bg-blue-600 text-white rounded-2xl text-xs font-sans shadow-lg">
+    <div className="max-w-xs px-4 py-2 bg-blue-600 text-white rounded-2xl text-xs font-sans shadow-lg" style={{ backgroundColor: style.backgroundColor, color: style.textColor }}>
       <p><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> km in <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /> at <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> pace ❤️</p>
     </div>
   );
@@ -339,7 +338,7 @@ export function IMessageSticker({ metrics, style, onEditField }: TemplateProps) 
 // 21. iOS Call Banner
 export function IosCallSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 px-3 py-2 bg-zinc-900/90 backdrop-blur text-white rounded-2xl border border-zinc-800 flex items-center justify-between text-xs font-sans shadow-2xl">
+    <div className="w-64 px-3 py-2 bg-zinc-900/90 backdrop-blur text-white rounded-2xl border border-zinc-800 flex items-center justify-between text-xs font-sans shadow-2xl" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="flex items-center gap-2">
         <div className="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center font-bold text-white text-xs">🏃</div>
         <div>
@@ -357,7 +356,7 @@ export function IosCallSticker({ metrics, style, onEditField }: TemplateProps) {
 // 22. Sticky Note
 export function StickyNoteSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-48 p-3 bg-yellow-200 text-black font-handwritten text-lg rounded shadow-xl rotate-1">
+    <div className="w-48 p-3 bg-yellow-200 text-black font-handwritten text-lg rounded shadow-xl rotate-1" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <p className="font-bold border-b border-black/20 pb-1"><EditableField value={metrics.title} onSave={(v) => onEditField?.('title', v)} /></p>
       <p className="mt-1">• <EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</p>
       <p>• Pace <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></p>
@@ -368,7 +367,7 @@ export function StickyNoteSticker({ metrics, style, onEditField }: TemplateProps
 // 23. Nutrition Facts
 export function NutritionFactsSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-56 p-2.5 bg-white text-black border-2 border-black font-sans text-xs">
+    <div className="w-56 p-2.5 bg-white text-black border-2 border-black font-sans text-xs" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <h2 className="font-black text-base border-b-2 border-black pb-0.5">Nutrition Facts</h2>
       <div className="border-b border-black py-0.5 font-bold flex justify-between">
         <span>Distance</span><span><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</span>
@@ -384,7 +383,7 @@ export function NutritionFactsSticker({ metrics, style, onEditField }: TemplateP
 // 24. Instagram Post Parody
 export function InstagramPostSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 p-3 bg-zinc-950 text-white rounded-xl border border-zinc-800 font-sans text-xs space-y-1.5 shadow-xl">
+    <div className="w-64 p-3 bg-zinc-950 text-white rounded-xl border border-zinc-800 font-sans text-xs space-y-1.5 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="flex items-center gap-2">
         <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-yellow-400 to-pink-600 p-0.5">
           <div className="w-full h-full bg-zinc-900 rounded-full flex items-center justify-center text-[10px]">🏃</div>
@@ -399,7 +398,7 @@ export function InstagramPostSticker({ metrics, style, onEditField }: TemplatePr
 // 25. Serif Magazine
 export function SerifMagazineSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-4 bg-black/70 backdrop-blur text-white font-serif text-center w-64 rounded-xl border border-white/20">
+    <div className="p-4 bg-black/70 backdrop-blur text-white font-serif text-center w-64 rounded-xl border border-white/20" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <p className="text-[10px] uppercase tracking-widest text-zinc-300 border-b border-white/20 pb-1 mb-2"><EditableField value={metrics.date} onSave={(v) => onEditField?.('date', v)} /></p>
       <h2 className="text-2xl italic font-semibold"><EditableField value={metrics.title} onSave={(v) => onEditField?.('title', v)} /></h2>
       <div className="text-3xl font-bold my-1 text-amber-400"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> <span className="text-lg italic">km</span></div>
@@ -407,10 +406,10 @@ export function SerifMagazineSticker({ metrics, style, onEditField }: TemplatePr
   );
 }
 
-// NEW 26: Marathon Milestone PB Card
+// 26. Marathon Milestone PB Card
 export function MarathonMilestoneSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-4 bg-yellow-400 text-black font-sans text-center w-64 rounded-xl border-2 border-black shadow-2xl">
+    <div className="p-4 bg-yellow-400 text-black font-sans text-center w-64 rounded-xl border-2 border-black shadow-2xl" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <Trophy className="w-8 h-8 mx-auto mb-1 text-black" />
       <div className="font-black text-xs tracking-widest uppercase">PERSONAL RECORD PB</div>
       <div className="text-3xl font-black my-1"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
@@ -419,10 +418,10 @@ export function MarathonMilestoneSticker({ metrics, style, onEditField }: Templa
   );
 }
 
-// NEW 27: Cadence RPM Gauge
+// 27. Cadence RPM Gauge
 export function CadenceRpmSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 bg-slate-900 text-sky-400 font-mono text-center w-56 rounded-2xl border border-sky-800 shadow-xl">
+    <div className="p-3 bg-slate-900 text-sky-400 font-mono text-center w-56 rounded-2xl border border-sky-800 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <Zap className="w-5 h-5 mx-auto mb-1 text-yellow-400" />
       <div className="text-[10px] text-slate-400 uppercase">CADENCE / STRIDE</div>
       <div className="text-3xl font-black text-white my-1">178 <span className="text-xs text-sky-400 font-normal">SPM</span></div>
@@ -431,10 +430,10 @@ export function CadenceRpmSticker({ metrics, style, onEditField }: TemplateProps
   );
 }
 
-// NEW 28: HR Zone 2 Aerobic Bar
+// 28. HR Zone 2 Aerobic Bar
 export function HrZoneMeterSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="p-3 bg-slate-900 text-white font-sans text-xs w-64 rounded-xl border border-slate-700">
+    <div className="p-3 bg-slate-900 text-white font-sans text-xs w-64 rounded-xl border border-slate-700" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="flex justify-between items-center mb-1">
         <span className="font-bold flex items-center gap-1"><Heart className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" /> HR ZONE 2</span>
         <span className="font-mono text-emerald-400 font-bold"><EditableField value={metrics.heartRate} onSave={(v) => onEditField?.('heartRate', v)} /> BPM</span>
@@ -445,15 +444,14 @@ export function HrZoneMeterSticker({ metrics, style, onEditField }: TemplateProp
         <div className="w-1/5 bg-amber-500 opacity-30" />
         <div className="w-1/5 bg-red-500 opacity-30" />
       </div>
-      <div className="text-[10px] text-zinc-400">72% Aerobic Endurance Zone</div>
     </div>
   );
 }
 
-// NEW 29: Newspaper Headline Banner
+// 29. Newspaper Headline Banner
 export function NewspaperHeadlineSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 p-3 bg-amber-50 text-stone-900 font-serif text-center border-2 border-stone-800 shadow-xl">
+    <div className="w-64 p-3 bg-amber-50 text-stone-900 font-serif text-center border-2 border-stone-800 shadow-xl" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="text-[9px] uppercase font-mono tracking-widest border-b border-stone-800 pb-0.5 mb-1">THE DAILY ATHLETE GAZETTE</div>
       <h3 className="font-extrabold text-lg leading-tight uppercase">RUNNER CRUSHES <EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</h3>
       <p className="text-[11px] italic mt-1 text-stone-700">Finished in <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /> with a blistering pace of <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /km.</p>
@@ -461,10 +459,10 @@ export function NewspaperHeadlineSticker({ metrics, style, onEditField }: Templa
   );
 }
 
-// NEW 30: Spotify Player Parody
+// 30. Spotify Player Parody
 export function SpotifyPlayerSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 p-3 bg-neutral-900 text-white rounded-2xl font-sans text-xs shadow-2xl border border-neutral-800">
+    <div className="w-64 p-3 bg-neutral-900 text-white rounded-2xl font-sans text-xs shadow-2xl border border-neutral-800" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 bg-gradient-to-tr from-emerald-500 to-green-400 rounded-lg flex items-center justify-center font-bold text-black text-xl shadow-lg">🏃</div>
         <div className="flex-1 truncate">
@@ -479,10 +477,10 @@ export function SpotifyPlayerSticker({ metrics, style, onEditField }: TemplatePr
   );
 }
 
-// NEW 31: Airport Boarding Pass Ticket
+// 31. Airport Boarding Pass Ticket
 export function AirportBoardingPassSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-64 p-3 bg-white text-slate-900 font-mono text-xs rounded-xl shadow-2xl border border-slate-300">
+    <div className="w-64 p-3 bg-white text-slate-900 font-mono text-xs rounded-xl shadow-2xl border border-slate-300" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="flex justify-between items-center border-b border-slate-200 pb-1 mb-2">
         <span className="font-black text-blue-600 flex items-center gap-1"><Plane className="w-3.5 h-3.5" /> SHARE AIRLINES</span>
         <span className="bg-slate-100 text-[9px] px-1.5 py-0.5 font-bold">BOARDING PASS</span>
@@ -496,10 +494,10 @@ export function AirportBoardingPassSticker({ metrics, style, onEditField }: Temp
   );
 }
 
-// NEW 32: Cassette Tape 80s Retro
+// 32. Cassette Tape 80s Retro
 export function CassetteTapeSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-60 p-3 bg-amber-400 text-slate-900 rounded-xl font-mono text-xs border-2 border-slate-900 shadow-xl">
+    <div className="w-60 p-3 bg-amber-400 text-slate-900 rounded-xl font-mono text-xs border-2 border-slate-900 shadow-xl" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="bg-white p-2 rounded border border-slate-900 text-center">
         <div className="text-[10px] font-bold border-b border-slate-300 pb-0.5 mb-1">SIDE A • MORNING RUN MIX</div>
         <div className="font-black text-sm"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM • <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
@@ -508,10 +506,10 @@ export function CassetteTapeSticker({ metrics, style, onEditField }: TemplatePro
   );
 }
 
-// NEW 33: Polaroid Vintage Photo Badge
+// 33. Polaroid Vintage Photo Badge
 export function PolaroidFrameSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-56 p-3 bg-white text-stone-800 shadow-2xl rounded font-sans text-center border border-stone-200">
+    <div className="w-56 p-3 bg-white text-stone-800 shadow-2xl rounded font-sans text-center border border-stone-200" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="w-full h-32 bg-stone-900 rounded mb-2 flex items-center justify-center text-4xl">🏃</div>
       <div className="font-bold text-xs"><EditableField value={metrics.title} onSave={(v) => onEditField?.('title', v)} /></div>
       <div className="text-[10px] text-stone-500"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM • <EditableField value={metrics.date} onSave={(v) => onEditField?.('date', v)} /></div>
@@ -519,13 +517,53 @@ export function PolaroidFrameSticker({ metrics, style, onEditField }: TemplatePr
   );
 }
 
-// NEW 34: Cyberpunk Neon HUD Badge
+// 34. Cyberpunk Neon HUD Badge
 export function CyberpunkNeonSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
-    <div className="w-60 p-3 bg-slate-950 text-cyan-400 font-mono text-xs border border-cyan-400 rounded glow-cyan shadow-2xl">
+    <div className="w-60 p-3 bg-slate-950 text-cyan-400 font-mono text-xs border border-cyan-400 rounded glow-cyan shadow-2xl" style={{ backgroundColor: style.backgroundColor, color: style.textColor, borderColor: style.borderColor }}>
       <div className="text-[9px] text-cyan-600 border-b border-cyan-800 pb-1 mb-1">CYBER_RUN // TELEMETRY_SYS</div>
       <div className="text-2xl font-black tracking-wider text-cyan-300"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
       <div className="text-[10px] text-cyan-500 mt-1">PACE: <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> | STATUS: OPTIMAL</div>
+    </div>
+  );
+}
+
+// NEW 35: 4-Quadrant Workout Summary Grid
+export function WorkoutSummaryGridSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="w-64 p-3 bg-zinc-950 text-white font-sans text-xs rounded-2xl border border-zinc-800 shadow-2xl grid grid-cols-2 gap-2" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
+      <div className="p-2 bg-zinc-900 rounded-xl text-center">
+        <div className="text-[9px] text-zinc-400 uppercase">Distance</div>
+        <div className="text-xl font-black text-cyan-400"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> <span className="text-xs">km</span></div>
+      </div>
+      <div className="p-2 bg-zinc-900 rounded-xl text-center">
+        <div className="text-[9px] text-zinc-400 uppercase">Pace</div>
+        <div className="text-xl font-black text-amber-400"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+      </div>
+      <div className="p-2 bg-zinc-900 rounded-xl text-center">
+        <div className="text-[9px] text-zinc-400 uppercase">Duration</div>
+        <div className="text-lg font-black text-emerald-400"><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+      <div className="p-2 bg-zinc-900 rounded-xl text-center">
+        <div className="text-[9px] text-zinc-400 uppercase">Heart Rate</div>
+        <div className="text-xl font-black text-rose-400"><EditableField value={metrics.heartRate} onSave={(v) => onEditField?.('heartRate', v)} /> <span className="text-xs">bpm</span></div>
+      </div>
+    </div>
+  );
+}
+
+// NEW 36: Weekly Recap Ring Progress Badge
+export function WeeklyRecapRingSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="w-64 p-4 bg-zinc-900 text-white font-sans text-xs rounded-2xl border border-zinc-700 shadow-2xl flex items-center gap-3" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
+      <div className="w-14 h-14 rounded-full border-4 border-cyan-400 flex items-center justify-center font-black text-sm text-cyan-400 flex-shrink-0">
+        84%
+      </div>
+      <div>
+        <div className="text-[10px] text-zinc-400 uppercase font-bold">WEEKLY TARGET RECAP</div>
+        <div className="text-lg font-black text-white"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-[10px] text-emerald-400">+12% vs last week</div>
+      </div>
     </div>
   );
 }
@@ -577,6 +615,8 @@ export function StickerRenderer({
     case 'cassette_tape': return <CassetteTapeSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'polaroid_frame': return <PolaroidFrameSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'cyberpunk_neon': return <CyberpunkNeonSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'workout_summary_grid': return <WorkoutSummaryGridSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weekly_recap_ring': return <WeeklyRecapRingSticker metrics={metrics} style={style} onEditField={onEditField} />;
     default: return <ReceiptSticker metrics={metrics} style={style} onEditField={onEditField} />;
   }
 }
