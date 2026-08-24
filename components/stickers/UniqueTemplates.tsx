@@ -1721,3 +1721,1346 @@ export function MiniMapSticker({ metrics, style, onEditField }: TProps) {
     </div>
   );
 }
+
+// ──────────────────────────────────────────────────────────────
+// 91. PROGRESS BAR — Horizontal progress with percentage
+// ──────────────────────────────────────────────────────────────
+export function ProgressBarSticker({ metrics, style, onEditField }: TProps) {
+  const pct = Math.min(100, (parseFloat(metrics.distance) / 42.195) * 100);
+  return (
+    <div className="w-60 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="text-[10px] uppercase tracking-wider mb-1" style={{ color: style.textColor, opacity: 0.5 }}>Marathon Progress</div>
+      <div className="text-2xl font-black" style={{ color: style.accentColor }}>{pct.toFixed(1)}%</div>
+      <div className="w-full h-2 rounded-full mt-2" style={{ backgroundColor: `${style.accentColor}22` }}>
+        <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: style.accentColor }} />
+      </div>
+      <div className="flex justify-between mt-1 text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}>
+        <span><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</span>
+        <span>42.195 KM</span>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 92. CIRCULAR GAUGE — Circular gauge with needle
+// ──────────────────────────────────────────────────────────────
+export function CircularGaugeSticker({ metrics, style, onEditField }: TProps) {
+  const bpm = parseInt(metrics.heartRate) || 150;
+  const angle = (bpm / 200) * 180 - 90;
+  return (
+    <div className="w-56 p-4 text-center shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <svg className="w-full h-24" viewBox="0 0 100 55">
+        <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke={`${style.accentColor}33`} strokeWidth="6" strokeLinecap="round" />
+        <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke={style.accentColor} strokeWidth="6" strokeLinecap="round"
+          strokeDasharray={`${(bpm/200)*126} 126`} />
+        <line x1="50" y1="50" x2={50 + 30*Math.cos(angle*Math.PI/180)} y2={50 + 30*Math.sin(angle*Math.PI/180)}
+          stroke={style.textColor} strokeWidth="2" strokeLinecap="round" />
+        <circle cx="50" cy="50" r="3" fill={style.textColor} />
+      </svg>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}>
+        <EditableField value={metrics.heartRate} onSave={(v) => onEditField?.('heartRate', v)} /> <span className="text-[10px]">BPM</span>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 93. GRID 4X4 — 4×4 grid of metrics
+// ──────────────────────────────────────────────────────────────
+export function Grid4x4Sticker({ metrics, style, onEditField }: TProps) {
+  const items = [
+    { label: 'DIST', val: metrics.distance },
+    { label: 'PACE', val: metrics.pace },
+    { label: 'TIME', val: metrics.time },
+    { label: 'HR', val: metrics.heartRate },
+    { label: 'ELEV', val: metrics.elevation + 'm' },
+    { label: 'CAL', val: metrics.calories },
+    { label: 'DATE', val: metrics.date },
+    { label: 'KM', val: metrics.unit },
+  ];
+  return (
+    <div className="grid grid-cols-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      {items.map((item, i) => (
+        <div key={i} className="p-2 text-center" style={{ borderRight: i % 4 < 3 ? `1px solid ${style.borderColor}` : 'none', borderBottom: i < 4 ? `1px solid ${style.borderColor}` : 'none' }}>
+          <div className="text-[7px] uppercase" style={{ color: style.textColor, opacity: 0.4 }}>{item.label}</div>
+          <div className="text-[11px] font-bold" style={{ color: i === 0 ? style.accentColor : style.textColor }}>{item.val}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 94. QUOTE CARD — Inspirational quote layout
+// ──────────────────────────────────────────────────────────────
+export function QuoteCardSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-60 p-5 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="text-4xl mb-2" style={{ color: style.accentColor, lineHeight: 1 }}>"</div>
+      <div className="text-sm italic" style={{ color: style.textColor }}>
+        Ran <EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> km in <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} />
+      </div>
+      <div className="mt-3 text-[10px]" style={{ color: style.textColor, opacity: 0.5 }}>— {metrics.location}</div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 95. COMPARISON SPLIT — Left vs Right comparison
+// ──────────────────────────────────────────────────────────────
+export function ComparisonSplitSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="flex shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      <div className="w-1/2 p-4 text-center" style={{ borderRight: `1px solid ${style.borderColor}` }}>
+        <div className="text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.4 }}>This Run</div>
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+        <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}>KM</div>
+      </div>
+      <div className="w-1/2 p-4 text-center">
+        <div className="text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.4 }}>Pace</div>
+        <div className="text-xl font-black" style={{ color: style.textColor }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+        <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}>/KM</div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 96. STACKED CARDS — Overlapping card effect
+// ──────────────────────────────────────────────────────────────
+export function StackedCardsSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="relative w-56 h-40 shadow-xl">
+      <div className="absolute inset-x-2 bottom-0 h-36 rounded-lg" style={{ backgroundColor: `${style.accentColor}33`, border: `1px solid ${style.accentColor}44` }} />
+      <div className="absolute inset-x-1 bottom-1 h-36 rounded-lg" style={{ backgroundColor: `${style.accentColor}66`, border: `1px solid ${style.accentColor}88` }} />
+      <div className="absolute inset-0 h-36 p-4 rounded-lg" style={{ backgroundColor: style.backgroundColor, border: `1px solid ${style.borderColor}` }}>
+        <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.7 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM</div>
+        <div className="text-[10px] mt-2" style={{ color: style.textColor, opacity: 0.5 }}>{metrics.time}</div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 97. FLOATING LABELS — Labels floating around center value
+// ──────────────────────────────────────────────────────────────
+export function FloatingLabelsSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="relative w-60 h-48 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-3xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+      </div>
+      <div className="absolute top-2 left-3 text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>Distance</div>
+      <div className="absolute top-2 right-3 text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>Pace</div>
+      <div className="absolute top-6 right-3 text-xs font-bold" style={{ color: style.textColor }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+      <div className="absolute bottom-2 left-3 text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>Time</div>
+      <div className="absolute bottom-2 right-3 text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>HR</div>
+      <div className="absolute bottom-6 left-3 text-xs font-bold" style={{ color: style.textColor }}><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      <div className="absolute bottom-6 right-3 text-xs font-bold" style={{ color: style.textColor }}><EditableField value={metrics.heartRate} onSave={(v) => onEditField?.('heartRate', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 98. ASYMMETRIC LAYOUT — Off-center weighted design
+// ──────────────────────────────────────────────────────────────
+export function AsymmetricLayoutSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-60 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      <div className="h-12" style={{ backgroundColor: style.accentColor }} />
+      <div className="p-4 -mt-4" style={{ backgroundColor: style.backgroundColor }}>
+        <div className="text-2xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> km</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 99. MINIMALIST LINE — Ultra minimal with single line
+// ──────────────────────────────────────────────────────────────
+export function MinimalistLineSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="text-2xl font-light" style={{ color: style.textColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+      <div className="w-full h-px my-2" style={{ backgroundColor: style.accentColor }} />
+      <div className="text-[10px] uppercase tracking-widest" style={{ color: style.accentColor }}>kilometers</div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 100. CARD FLIP — Front/Back card effect
+// ──────────────────────────────────────────────────────────────
+export function CardFlipSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="flex shadow-xl" style={{ borderRadius: style.borderRadius, overflow: 'hidden' }}>
+      <div className="w-1/2 p-3" style={{ backgroundColor: style.backgroundColor, border: `1px solid ${style.borderColor}` }}>
+        <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+        <div className="text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>km</div>
+      </div>
+      <div className="w-1/2 p-3" style={{ backgroundColor: `${style.accentColor}15`, border: `1px solid ${style.borderColor}` }}>
+        <div className="text-lg font-black" style={{ color: style.textColor }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+        <div className="text-[9px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>/km</div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 101. MASONRY GRID — Irregular grid layout
+// ──────────────────────────────────────────────────────────────
+export function MasonryGridSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-60 p-2 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="grid grid-cols-3 gap-1">
+        <div className="col-span-2 p-2 rounded" style={{ backgroundColor: `${style.accentColor}22` }}>
+          <div className="text-sm font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        </div>
+        <div className="p-2 rounded" style={{ backgroundColor: `${style.textColor}11` }}>
+          <div className="text-[10px] font-bold" style={{ color: style.textColor }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+        </div>
+        <div className="p-2 rounded" style={{ backgroundColor: `${style.textColor}11` }}>
+          <div className="text-[10px] font-bold" style={{ color: style.textColor }}><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+        </div>
+        <div className="col-span-2 p-2 rounded" style={{ backgroundColor: `${style.accentColor}11` }}>
+          <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}>{metrics.location}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 102. HEXAGON BADGE — Hexagonal badge design
+// ──────────────────────────────────────────────────────────────
+export function HexagonBadgeSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 h-52 flex items-center justify-center shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="relative">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <polygon points="60,5 110,30 110,90 60,115 10,90 10,30" fill="none" stroke={style.accentColor} strokeWidth="2" />
+          <polygon points="60,15 100,35 100,85 60,105 20,85 20,35" fill={`${style.accentColor}22`} stroke="none" />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+          <div className="text-[9px] uppercase" style={{ color: style.textColor }}>km</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 103. DIAMOND SHAPE — Diamond rotated layout
+// ──────────────────────────────────────────────────────────────
+export function DiamondShapeSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 h-56 flex items-center justify-center shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="rotate-45 w-32 h-32 flex flex-col items-center justify-center" style={{ border: `2px solid ${style.accentColor}` }}>
+        <div className="-rotate-45 text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+        <div className="-rotate-45 text-[9px] uppercase" style={{ color: style.textColor }}>km</div>
+        <div className="-rotate-45 text-[10px] mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 104. TRIANGLE LAYOUT — Triangle-based design
+// ──────────────────────────────────────────────────────────────
+export function TriangleLayoutSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 h-52 flex items-center justify-center shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="relative">
+        <svg width="140" height="120" viewBox="0 0 140 120">
+          <polygon points="70,10 130,110 10,110" fill={`${style.accentColor}22`} stroke={style.accentColor} strokeWidth="2" />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center pt-4">
+          <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+          <div className="text-[9px] uppercase" style={{ color: style.textColor }}>km</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 105. ARCH FRAME — Arched doorway frame
+// ──────────────────────────────────────────────────────────────
+export function ArchFrameSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-52 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      <div className="h-16 relative" style={{ backgroundColor: `${style.accentColor}22` }}>
+        <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+          <path d="M0,40 Q50,-10 100,40" fill={`${style.accentColor}22`} stroke={style.accentColor} strokeWidth="1" />
+        </svg>
+      </div>
+      <div className="p-3 -mt-4 text-center">
+        <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 106. CIRCLE CUTOUT — Circle cutout from rectangle
+// ──────────────────────────────────────────────────────────────
+export function CircleCutoutSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: style.accentColor }}>
+        <div className="text-xs font-black" style={{ color: style.backgroundColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+      </div>
+      <div className="pt-10 p-3 text-center">
+        <div className="text-[10px] uppercase" style={{ color: style.textColor, opacity: 0.5 }}>Distance</div>
+        <div className="text-xs" style={{ color: style.textColor }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 107. ROUNDED STRIPES — Horizontal stripe pattern
+// ──────────────────────────────────────────────────────────────
+export function RoundedStripesSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl overflow-hidden" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      {[0,1,2,3,4].map(i => (
+        <div key={i} className="px-4 py-1.5" style={{ backgroundColor: i % 2 === 0 ? `${style.accentColor}15` : 'transparent' }}>
+          {i === 0 && <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>}
+          {i === 1 && <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM</div>}
+          {i === 2 && <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>}
+          {i === 3 && <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}>HR: <EditableField value={metrics.heartRate} onSave={(v) => onEditField?.('heartRate', v)} /></div>}
+          {i === 4 && <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}>{metrics.location}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 108. GRADIENT BORDER — Gradient border effect
+// ──────────────────────────────────────────────────────────────
+export function GradientBorderSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-[2px] shadow-xl" style={{ background: `linear-gradient(135deg, ${style.accentColor}, ${style.textColor})`, borderRadius: style.borderRadius }}>
+      <div className="p-4 rounded-lg" style={{ backgroundColor: style.backgroundColor }}>
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 109. INNER SHADOW — Inset shadow effect
+// ──────────────────────────────────────────────────────────────
+export function InnerShadowSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, boxShadow: `inset 0 2px 8px rgba(0,0,0,0.5)` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 110. DOUBLE FRAME — Double border frame
+// ──────────────────────────────────────────────────────────────
+export function DoubleFrameSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-[3px] shadow-xl" style={{ border: `2px solid ${style.accentColor}`, borderRadius: style.borderRadius }}>
+      <div className="p-4" style={{ border: `1px solid ${style.borderColor}`, borderRadius: `calc(${style.borderRadius} - 4px)` }}>
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 111. ZIGZAG EDGE — Zigzag bottom edge
+// ──────────────────────────────────────────────────────────────
+export function ZigzagEdgeSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      <div className="p-4 pb-2">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+      <svg className="w-full h-4" viewBox="0 0 100 10" preserveAspectRatio="none">
+        <path d="M0,0 L5,8 L10,0 L15,8 L20,0 L25,8 L30,0 L35,8 L40,0 L45,8 L50,0 L55,8 L60,0 L65,8 L70,0 L75,8 L80,0 L85,8 L90,0 L95,8 L100,0 L100,10 L0,10 Z" fill={style.accentColor} opacity="0.3" />
+      </svg>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 112. WAVE BOTTOM — Wave bottom edge
+// ──────────────────────────────────────────────────────────────
+export function WaveBottomSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      <div className="p-4 pb-0">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+      <svg className="w-full h-8" viewBox="0 0 100 20" preserveAspectRatio="none">
+        <path d="M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z" fill={style.accentColor} opacity="0.2" />
+        <path d="M0,10 Q25,0 50,10 T100,10" fill="none" stroke={style.accentColor} strokeWidth="1.5" />
+      </svg>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 113. CORNER FOLD — Corner fold effect
+// ──────────────────────────────────────────────────────────────
+export function CornerFoldSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute top-0 right-0 w-8 h-8" style={{ background: `linear-gradient(135deg, transparent 50%, ${style.accentColor}33 50%)` }} />
+      <div className="p-4">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 114. TABBED CARD — Card with tab header
+// ──────────────────────────────────────────────────────────────
+export function TabbedCardSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="flex" style={{ borderBottom: `2px solid ${style.accentColor}` }}>
+        <div className="px-3 py-1.5 text-[10px] font-bold" style={{ backgroundColor: style.accentColor, color: style.backgroundColor, borderRadius: `${style.borderRadius} ${style.borderRadius} 0 0` }}>SUMMARY</div>
+        <div className="px-3 py-1.5 text-[10px]" style={{ color: style.textColor, opacity: 0.4 }}>DETAILS</div>
+      </div>
+      <div className="p-3">
+        <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 115. ACCORDION — Collapsible sections
+// ──────────────────────────────────────────────────────────────
+export function AccordionSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl overflow-hidden" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      {[
+        { label: 'Distance', val: metrics.distance + ' KM', open: true },
+        { label: 'Pace', val: metrics.pace + ' /KM', open: false },
+        { label: 'Time', val: metrics.time, open: false },
+      ].map((item, i) => (
+        <div key={i} className="border-b last:border-b-0" style={{ borderColor: style.borderColor }}>
+          <div className="px-3 py-2 flex justify-between items-center" style={{ backgroundColor: item.open ? `${style.accentColor}15` : 'transparent' }}>
+            <span className="text-[10px] font-bold" style={{ color: style.textColor }}>{item.label}</span>
+            <span className="text-xs font-black" style={{ color: item.open ? style.accentColor : style.textColor }}>{item.val}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 116. SPLIT DIAGONAL — Diagonal split layout
+// ──────────────────────────────────────────────────────────────
+export function SplitDiagonalSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 h-32 shadow-xl relative overflow-hidden" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${style.accentColor}33 50%, transparent 50%)` }} />
+      <div className="absolute top-3 left-3">
+        <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      </div>
+      <div className="absolute bottom-3 right-3 text-right">
+        <div className="text-xs font-bold" style={{ color: style.textColor }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+        <div className="text-[9px]" style={{ color: style.textColor, opacity: 0.5 }}>/KM</div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 117. DOT PATTERN — Dot pattern background
+// ──────────────────────────────────────────────────────────────
+export function DotPatternSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(${style.accentColor} 1px, transparent 1px)`, backgroundSize: '8px 8px' }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 118. CROSS STITCH — Cross stitch pattern
+// ──────────────────────────────────────────────────────────────
+export function CrossStitchSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="grid grid-cols-8 gap-px mb-2">
+        {Array.from({ length: 16 }).map((_, i) => (
+          <div key={i} className="w-full aspect-square" style={{ backgroundColor: Math.random() > 0.5 ? style.accentColor : 'transparent', opacity: 0.3 }} />
+        ))}
+      </div>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 119. CHEVRON ROWS — Chevron row pattern
+// ──────────────────────────────────────────────────────────────
+export function ChevronRowsSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, overflow: 'hidden' }}>
+      <div className="p-3">
+        <div className="text-lg font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+      <svg className="w-full h-4" viewBox="0 0 100 10" preserveAspectRatio="none">
+        <path d="M0,5 L10,0 L20,5 L30,0 L40,5 L50,0 L60,5 L70,0 L80,5 L90,0 L100,5 L100,10 L0,10 Z" fill={style.accentColor} opacity="0.2" />
+      </svg>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 120. PINSTRIPE — Vertical pinstripe pattern
+// ──────────────────────────────────────────────────────────────
+export function PinstripeSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute inset-0 opacity-5" style={{ backgroundImage: `repeating-linear-gradient(90deg, ${style.accentColor} 0px, ${style.accentColor} 1px, transparent 1px, transparent 8px)` }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 121. BRICK LAYOUT — Brick wall pattern
+// ──────────────────────────────────────────────────────────────
+export function BrickLayoutSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="grid grid-cols-4 gap-px mb-2">
+        {[0,1,2,3,4,5,6,7].map(i => (
+          <div key={i} className="h-3 rounded-sm" style={{ backgroundColor: `${style.accentColor}${i % 3 === 0 ? '44' : '22'}`, gridColumn: i === 4 ? 'span 2' : 'span 1' }} />
+        ))}
+      </div>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-[10px]" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 122. TILE MOSAIC — Mosaic tile pattern
+// ──────────────────────────────────────────────────────────────
+export function TileMosaicSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-3 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="grid grid-cols-6 gap-px mb-2">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div key={i} className="aspect-square rounded-sm" style={{ backgroundColor: `${style.accentColor}${['22','44','66','88'][i % 4]}` }} />
+        ))}
+      </div>
+      <div className="text-lg font-black text-center" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-[10px] text-center" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 123. STAINED GLASS — Stained glass effect
+// ──────────────────────────────────────────────────────────────
+export function StainedGlassSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="grid grid-cols-3 gap-1 mb-2">
+        {[style.accentColor, style.textColor, style.accentColor, style.textColor, style.accentColor, style.textColor].map((c, i) => (
+          <div key={i} className="h-6 rounded-sm" style={{ backgroundColor: `${c}33`, border: `1px solid ${c}66` }} />
+        ))}
+      </div>
+      <div className="text-xl font-black text-center" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-[10px] text-center" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 124. PAPER TEXTURE — Paper texture effect
+// ──────────────────────────────────────────────────────────────
+export function PaperTextureSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, boxShadow: 'inset 0 0 20px rgba(0,0,0,0.1)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      <div className="mt-2 pt-2 text-[10px]" style={{ borderTop: `1px dashed ${style.borderColor}`, color: style.textColor, opacity: 0.4 }}>{metrics.location}</div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 125. CARBON FIBER — Carbon fiber weave pattern
+// ──────────────────────────────────────────────────────────────
+export function CarbonFiberSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#1a1a1a', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #333 0px, #333 1px, transparent 1px, transparent 4px), repeating-linear-gradient(-45deg, #333 0px, #333 1px, transparent 1px, transparent 4px)' }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 126. BRUSHED METAL — Brushed metal texture
+// ──────────────────────────────────────────────────────────────
+export function BrushedMetalSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#2a2a2a', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 127. DENIM FABRIC — Denim fabric texture
+// ──────────────────────────────────────────────────────────────
+export function DenimFabricSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#1a3a5c', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 2px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 128. CONCRETE WALL — Concrete wall texture
+// ──────────────────────────────────────────────────────────────
+export function ConcreteWallSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#3a3a3a', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 129. RUSTIC WOOD — Rustic wood texture
+// ──────────────────────────────────────────────────────────────
+export function RusticWoodSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#3d2b1f', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 6px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 130. BAMBOO WEAVE — Bamboo weave pattern
+// ──────────────────────────────────────────────────────────────
+export function BambooWeaveSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#2d4a2d', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 8px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 8px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 131. WOVEN PATTERN — Woven fabric pattern
+// ──────────────────────────────────────────────────────────────
+export function WovenPatternSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#2a2a3a', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 4px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 132. LEATHER GRAIN — Leather grain texture
+// ──────────────────────────────────────────────────────────────
+export function LeatherGrainSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#2a1a0a', borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '3px 3px' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 133. SILK SHEEN — Silk sheen gradient
+// ──────────────────────────────────────────────────────────────
+export function SilkSheenSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: `linear-gradient(135deg, ${style.backgroundColor} 0%, ${style.accentColor}15 50%, ${style.backgroundColor} 100%)` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 134. VELVET PLUSH — Velvet plush texture
+// ──────────────────────────────────────────────────────────────
+export function VelvetPlushSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, boxShadow: `inset 0 2px 10px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2)` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 135. SATIN FINISH — Satin finish gradient
+// ──────────────────────────────────────────────────────────────
+export function SatinFinishSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: `linear-gradient(180deg, ${style.backgroundColor} 0%, ${style.accentColor}10 100%)` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 136. MATTE PAPER — Matte paper texture
+// ──────────────────────────────────────────────────────────────
+export function MattePaperSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 137. GLOSSY SURFACE — Glossy surface reflection
+// ──────────────────────────────────────────────────────────────
+export function GlossySurfaceSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 40%)` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 138. TRANSLUCENT GLASS — Translucent glass effect
+// ──────────────────────────────────────────────────────────────
+export function TranslucentGlassSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: `${style.backgroundColor}cc`, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}`, backdropFilter: 'blur(10px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 139. FROSTED GLASS — Frosted glass blur effect
+// ──────────────────────────────────────────────────────────────
+export function FrostedGlassSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: `${style.backgroundColor}88`, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}88`, backdropFilter: 'blur(20px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 140. SMOKED GLASS — Smoked glass dark effect
+// ──────────────────────────────────────────────────────────────
+export function SmokedGlassSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: style.borderRadius, border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(15px)' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 141. CRACKED ICE — Cracked ice pattern
+// ──────────────────────────────────────────────────────────────
+export function CrackedIceSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#e8f4f8', borderRadius: style.borderRadius, border: '1px solid #b8d4e8' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+        <path d="M20,10 L35,25 L15,40" stroke="#667" strokeWidth="0.5" fill="none" />
+        <path d="M50,5 L65,20 L45,35 L70,50" stroke="#667" strokeWidth="0.5" fill="none" />
+        <path d="M80,15 L95,30 L75,45" stroke="#667" strokeWidth="0.5" fill="none" />
+        <path d="M10,60 L30,75 L5,90" stroke="#667" strokeWidth="0.5" fill="none" />
+        <path d="M60,55 L80,70 L55,85" stroke="#667" strokeWidth="0.5" fill="none" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#333', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 142. LIQUID METAL — Liquid metal gradient
+// ──────────────────────────────────────────────────────────────
+export function LiquidMetalSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: `linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #1a1a2e 75%, #16213e 100%)`, borderRadius: style.borderRadius, border: '1px solid #0f3460' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#8899aa', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 143. HOLOGRAPHIC — Holographic rainbow effect
+// ──────────────────────────────────────────────────────────────
+export function HolographicSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff)', borderRadius: style.borderRadius, border: '1px solid rgba(255,255,255,0.3)' }}>
+      <div className="text-xl font-black" style={{ color: '#000' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#000', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 144. IRIDESCENT — Iridescent color shift
+// ──────────────────────────────────────────────────────────────
+export function IridescentSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', borderRadius: style.borderRadius, border: '1px solid rgba(255,255,255,0.2)' }}>
+      <div className="text-xl font-black" style={{ color: '#fff' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#fff', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 145. PRISMATIC — Prismatic light effect
+// ──────────────────────────────────────────────────────────────
+export function PrismaticSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #0088ff, #8800ff)', borderRadius: style.borderRadius, border: '1px solid rgba(255,255,255,0.2)' }}>
+      <div className="text-xl font-black" style={{ color: '#fff' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#fff', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 146. NEBULA CLOUD — Nebula cloud background
+// ──────────────────────────────────────────────────────────────
+export function NebulaCloudSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'radial-gradient(ellipse at 30% 40%, #1a0533 0%, #0a001a 60%, #000 100%)', borderRadius: style.borderRadius, border: '1px solid #2a0a4a' }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#8866aa', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 147. AURORA BOREALIS — Northern lights effect
+// ──────────────────────────────────────────────────────────────
+export function AuroraBorealisSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'linear-gradient(180deg, #0a0a2e 0%, #1a3a5c 30%, #2ecc71 60%, #0a0a2e 100%)', borderRadius: style.borderRadius, border: '1px solid #2ecc71' }}>
+      <div className="text-xl font-black" style={{ color: '#fff' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#fff', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 148. GALAXY SPIRAL — Galaxy spiral pattern
+// ──────────────────────────────────────────────────────────────
+export function GalaxySpiralSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#000011', borderRadius: style.borderRadius, border: '1px solid #112244' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100">
+        <path d="M50,50 Q60,30 50,10 Q30,30 50,50 Q70,70 50,90 Q30,70 50,50" stroke="#4466aa" strokeWidth="1" fill="none" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#6688bb', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 149. STAR FIELD — Star field pattern
+// ──────────────────────────────────────────────────────────────
+export function StarFieldSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#000022', borderRadius: style.borderRadius, border: '1px solid #222244' }}>
+      <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(1px 1px at 10% 20%, #fff 100%, transparent), radial-gradient(1px 1px at 30% 60%, #fff 100%, transparent), radial-gradient(1px 1px at 50% 10%, #fff 100%, transparent), radial-gradient(1px 1px at 70% 80%, #fff 100%, transparent), radial-gradient(1px 1px at 90% 40%, #fff 100%, transparent)' }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#6688bb', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 150. SUN FLARE — Sun flare effect
+// ──────────────────────────────────────────────────────────────
+export function SunFlareSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#1a0a00', borderRadius: style.borderRadius, border: '1px solid #3a2a1a' }}>
+      <div className="absolute top-0 right-0 w-16 h-16" style={{ background: 'radial-gradient(circle, rgba(255,200,0,0.3) 0%, transparent 70%)' }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#cc9966', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 151. MOON GLOW — Moon glow effect
+// ──────────────────────────────────────────────────────────────
+export function MoonGlowSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a0a1a', borderRadius: style.borderRadius, border: '1px solid #1a1a3a' }}>
+      <div className="absolute top-2 right-2 w-8 h-8 rounded-full" style={{ background: 'radial-gradient(circle, rgba(200,200,255,0.4) 0%, transparent 70%)' }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#6666aa', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 152. WATER RIPPLE — Water ripple effect
+// ──────────────────────────────────────────────────────────────
+export function WaterRippleSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a1a2a', borderRadius: style.borderRadius, border: '1px solid #1a3a5a' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="10" stroke="#3388aa" strokeWidth="0.5" fill="none" />
+        <circle cx="50" cy="50" r="20" stroke="#3388aa" strokeWidth="0.5" fill="none" />
+        <circle cx="50" cy="50" r="30" stroke="#3388aa" strokeWidth="0.5" fill="none" />
+        <circle cx="50" cy="50" r="40" stroke="#3388aa" strokeWidth="0.5" fill="none" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#3388aa', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 153. FLAME WAVE — Flame wave effect
+// ──────────────────────────────────────────────────────────────
+export function FlameWaveSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'linear-gradient(180deg, #1a0a00 0%, #4a1a00 50%, #ff4400 100%)', borderRadius: style.borderRadius, border: '1px solid #ff4400' }}>
+      <div className="text-xl font-black" style={{ color: '#ff8844' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#ffcc88', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 154. ELECTRIC SPARK — Electric spark effect
+// ──────────────────────────────────────────────────────────────
+export function ElectricSparkSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a0a1a', borderRadius: style.borderRadius, border: '1px solid #00ff88' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100">
+        <path d="M20,50 L30,45 L25,55 L40,40 L35,55 L50,35 L45,55 L60,30 L55,55 L70,25 L65,55 L80,20" stroke="#00ff88" strokeWidth="1" fill="none" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#00ff88' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#00ff88', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 155. LASER GRID — Laser grid pattern
+// ──────────────────────────────────────────────────────────────
+export function LaserGridSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a0a0a', borderRadius: style.borderRadius, border: '1px solid #ff0044' }}>
+      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(255,0,68,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,68,0.3) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#ff0044' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#ff4466', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 156. RADAR SWEEP — Radar sweep effect
+// ──────────────────────────────────────────────────────────────
+export function RadarSweepSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a1a0a', borderRadius: style.borderRadius, border: '1px solid #00ff44' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="15" stroke="#00ff44" strokeWidth="0.5" fill="none" />
+        <circle cx="50" cy="50" r="30" stroke="#00ff44" strokeWidth="0.5" fill="none" />
+        <circle cx="50" cy="50" r="45" stroke="#00ff44" strokeWidth="0.5" fill="none" />
+        <line x1="50" y1="50" x2="50" y2="5" stroke="#00ff44" strokeWidth="0.5" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#00ff44' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#00ff44', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 157. SONAR PING — Sonar ping effect
+// ──────────────────────────────────────────────────────────────
+export function SonarPingSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#001a33', borderRadius: style.borderRadius, border: '1px solid #0066cc' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+        <circle cx="30" cy="50" r="5" stroke="#0088ff" strokeWidth="1" fill="none" />
+        <circle cx="30" cy="50" r="15" stroke="#0088ff" strokeWidth="0.5" fill="none" />
+        <circle cx="30" cy="50" r="25" stroke="#0088ff" strokeWidth="0.3" fill="none" />
+        <line x1="30" y1="50" x2="90" y2="50" stroke="#0088ff" strokeWidth="0.5" strokeDasharray="2,2" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#0088ff' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#0088ff', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 158. TARGET LOCK — Target lock effect
+// ──────────────────────────────────────────────────────────────
+export function TargetLockSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#1a0a0a', borderRadius: style.borderRadius, border: '1px solid #ff4444' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="10" stroke="#ff4444" strokeWidth="1" fill="none" />
+        <circle cx="50" cy="50" r="20" stroke="#ff4444" strokeWidth="0.5" fill="none" />
+        <line x1="50" y1="30" x2="50" y2="70" stroke="#ff4444" strokeWidth="0.5" />
+        <line x1="30" y1="50" x2="70" y2="50" stroke="#ff4444" strokeWidth="0.5" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#ff4444' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#ff8888', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 159. SCOPE VIEW — Scope view effect
+// ──────────────────────────────────────────────────────────────
+export function ScopeViewSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a0a0a', borderRadius: style.borderRadius, border: '1px solid #333' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="30" stroke="#00ff00" strokeWidth="0.5" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="#00ff00" strokeWidth="0.3" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="#00ff00" strokeWidth="0.3" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#00ff00' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#00ff00', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 160. XRAY VISION — X-ray vision effect
+// ──────────────────────────────────────────────────────────────
+export function XrayVisionSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#000', borderRadius: style.borderRadius, border: '1px solid #00aaff' }}>
+      <div className="text-xl font-black" style={{ color: '#00ccff' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#00ccff', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 161. THERMAL MAP — Thermal map effect
+// ──────────────────────────────────────────────────────────────
+export function ThermalMapSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ background: 'linear-gradient(135deg, #0000ff 0%, #00ff00 33%, #ffff00 66%, #ff0000 100%)', borderRadius: style.borderRadius, border: '1px solid #ff0000' }}>
+      <div className="text-xl font-black" style={{ color: '#fff' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#fff', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 162. NIGHT VISION — Night vision effect
+// ──────────────────────────────────────────────────────────────
+export function NightVisionSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#001a00', borderRadius: style.borderRadius, border: '1px solid #00ff00', backgroundImage: 'radial-gradient(rgba(0,255,0,0.1) 1px, transparent 1px)', backgroundSize: '4px 4px' }}>
+      <div className="text-xl font-black" style={{ color: '#00ff00' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#00ff00', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 163. BLUEPRINT GRID — Blueprint grid pattern
+// ──────────────────────────────────────────────────────────────
+export function BlueprintGridSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#0a1a3a', borderRadius: style.borderRadius, border: '1px solid #3388cc', backgroundImage: 'linear-gradient(rgba(51,136,204,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(51,136,204,0.2) 1px, transparent 1px)', backgroundSize: '15px 15px' }}>
+      <div className="text-xl font-black" style={{ color: '#3388cc' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#66aadd', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 164. SCHEMATIC — Schematic diagram style
+// ──────────────────────────────────────────────────────────────
+export function SchematicSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#1a1a1a', borderRadius: style.borderRadius, border: '1px solid #00ff00' }}>
+      <div className="text-[9px] font-mono mb-2" style={{ color: '#00ff00' }}>RUN_DATA_v2.0</div>
+      <div className="text-xl font-mono font-black" style={{ color: '#00ff00' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-[10px] font-mono mt-1" style={{ color: '#00ff00', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 165. CIRCUIT BOARD — Circuit board pattern
+// ──────────────────────────────────────────────────────────────
+export function CircuitBoardSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: '#0a2a0a', borderRadius: style.borderRadius, border: '1px solid #00aa00' }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+        <path d="M10,50 L30,50 L30,30 L50,30 L50,50 L70,50 L70,70 L90,70" stroke="#00ff00" strokeWidth="1" fill="none" />
+        <circle cx="30" cy="50" r="2" fill="#00ff00" />
+        <circle cx="50" cy="30" r="2" fill="#00ff00" />
+        <circle cx="70" cy="50" r="2" fill="#00ff00" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: '#00ff00' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: '#00ff00', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 166. MOTHERBOARD — Motherboard layout
+// ──────────────────────────────────────────────────────────────
+export function MotherboardSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#0a1a0a', borderRadius: style.borderRadius, border: '1px solid #00cc00' }}>
+      <div className="grid grid-cols-4 gap-px mb-2">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="h-2 rounded-sm" style={{ backgroundColor: i % 2 === 0 ? '#00ff0033' : '#00ff0011' }} />
+        ))}
+      </div>
+      <div className="text-xl font-black" style={{ color: '#00ff00' }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: '#00ff00', opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 167. CHIP LAYOUT — Chip layout design
+// ──────────────────────────────────────────────────────────────
+export function ChipLayoutSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: '#0a0a0a', borderRadius: style.borderRadius, border: '1px solid #666' }}>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="flex gap-px">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="w-0.5 h-3" style={{ backgroundColor: '#888' }} />
+          ))}
+        </div>
+        <div className="flex-1 h-12 rounded flex items-center justify-center" style={{ backgroundColor: '#1a1a1a', border: '1px solid #444' }}>
+          <div className="text-[8px] font-mono" style={{ color: '#00ff00' }}>CPU</div>
+        </div>
+        <div className="flex gap-px">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="w-0.5 h-3" style={{ backgroundColor: '#888' }} />
+          ))}
+        </div>
+      </div>
+      <div className="text-lg font-black text-center" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 168. WIRE FRAME — Wire frame design
+// ──────────────────────────────────────────────────────────────
+export function WireFrameSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px dashed ${style.accentColor}` }}>
+      <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 169. MESH NETWORK — Mesh network pattern
+// ──────────────────────────────────────────────────────────────
+export function MeshNetworkSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 100">
+        <line x1="10" y1="10" x2="50" y2="50" stroke={style.accentColor} strokeWidth="0.5" />
+        <line x1="50" y1="50" x2="90" y2="10" stroke={style.accentColor} strokeWidth="0.5" />
+        <line x1="10" y1="90" x2="50" y2="50" stroke={style.accentColor} strokeWidth="0.5" />
+        <line x1="50" y1="50" x2="90" y2="90" stroke={style.accentColor} strokeWidth="0.5" />
+        <circle cx="10" cy="10" r="2" fill={style.accentColor} />
+        <circle cx="90" cy="10" r="2" fill={style.accentColor} />
+        <circle cx="10" cy="90" r="2" fill={style.accentColor} />
+        <circle cx="90" cy="90" r="2" fill={style.accentColor} />
+        <circle cx="50" cy="50" r="3" fill={style.accentColor} />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 170. NODE GRAPH — Node graph layout
+// ──────────────────────────────────────────────────────────────
+export function NodeGraphSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: style.accentColor }} />
+        <div className="flex-1 h-px" style={{ backgroundColor: style.accentColor, opacity: 0.3 }} />
+        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: style.accentColor }} />
+      </div>
+      <div className="text-xl font-black text-center" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-[10px] text-center" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 171. DATA FLOW — Data flow diagram
+// ──────────────────────────────────────────────────────────────
+export function DataFlowSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="flex items-center gap-1 mb-2">
+        {['IN', '→', 'PROC', '→', 'OUT'].map((s, i) => (
+          <div key={i} className={`px-1.5 py-0.5 text-[7px] font-bold rounded ${i % 2 === 0 ? '' : 'text-transparent'}`}
+            style={i % 2 === 0 ? { backgroundColor: `${style.accentColor}22`, color: style.accentColor, border: `1px solid ${style.accentColor}44` } : {}}>
+            {s}
+          </div>
+        ))}
+      </div>
+      <div className="text-lg font-black text-center" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 172. PIPELINE — Pipeline layout
+// ──────────────────────────────────────────────────────────────
+export function PipelineSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <div className="flex items-center gap-1">
+        {['DIST', 'PACE', 'TIME'].map((label, i) => (
+          <React.Fragment key={i}>
+            <div className="px-2 py-1 rounded text-[8px] font-bold" style={{ backgroundColor: `${style.accentColor}22`, color: style.accentColor, border: `1px solid ${style.accentColor}44` }}>
+              {label}
+            </div>
+            {i < 2 && <div className="text-[8px]" style={{ color: style.accentColor, opacity: 0.4 }}>→</div>}
+          </React.Fragment>
+        ))}
+      </div>
+      <div className="text-lg font-black mt-2 text-center" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 173. CIRCUIT PATH — Circuit path design
+// ──────────────────────────────────────────────────────────────
+export function CircuitPathSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 100 100">
+        <path d="M10,50 L30,50 L30,30 L70,30 L70,50 L90,50" stroke={style.accentColor} strokeWidth="1" fill="none" />
+        <circle cx="30" cy="50" r="2" fill={style.accentColor} />
+        <circle cx="70" cy="30" r="2" fill={style.accentColor} />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// 174. TRACE LINE — Trace line pattern
+// ──────────────────────────────────────────────────────────────
+export function TraceLineSticker({ metrics, style, onEditField }: TProps) {
+  return (
+    <div className="w-56 p-4 shadow-xl relative" style={{ backgroundColor: style.backgroundColor, borderRadius: style.borderRadius, border: `1px solid ${style.borderColor}` }}>
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 50">
+        <path d="M0,25 Q25,10 50,25 T100,25" stroke={style.accentColor} strokeWidth="1" fill="none" />
+      </svg>
+      <div className="relative">
+        <div className="text-xl font-black" style={{ color: style.accentColor }}><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+        <div className="text-xs mt-1" style={{ color: style.textColor, opacity: 0.6 }}><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> • <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></div>
+      </div>
+    </div>
+  );
+}

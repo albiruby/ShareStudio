@@ -35,6 +35,34 @@ import {
   StackedMetricsSticker, RunningManSticker, BorderedFrameSticker,
   StatRibbonSticker, DotMatrixSticker, BadgeCollectionSticker,
   MiniMapSticker,
+  ProgressBarSticker, CircularGaugeSticker, Grid4x4Sticker,
+  QuoteCardSticker, ComparisonSplitSticker, StackedCardsSticker,
+  FloatingLabelsSticker, AsymmetricLayoutSticker, MinimalistLineSticker,
+  CardFlipSticker, MasonryGridSticker, HexagonBadgeSticker,
+  DiamondShapeSticker, TriangleLayoutSticker, ArchFrameSticker,
+  CircleCutoutSticker, RoundedStripesSticker, GradientBorderSticker,
+  InnerShadowSticker, DoubleFrameSticker, ZigzagEdgeSticker,
+  WaveBottomSticker, CornerFoldSticker, TabbedCardSticker,
+  AccordionSticker, SplitDiagonalSticker, DotPatternSticker,
+  CrossStitchSticker, ChevronRowsSticker, PinstripeSticker,
+  BrickLayoutSticker, TileMosaicSticker, StainedGlassSticker,
+  PaperTextureSticker, CarbonFiberSticker, BrushedMetalSticker,
+  DenimFabricSticker, ConcreteWallSticker, RusticWoodSticker,
+  BambooWeaveSticker, WovenPatternSticker, LeatherGrainSticker,
+  SilkSheenSticker, VelvetPlushSticker, SatinFinishSticker,
+  MattePaperSticker, GlossySurfaceSticker, TranslucentGlassSticker,
+  FrostedGlassSticker, SmokedGlassSticker, CrackedIceSticker,
+  LiquidMetalSticker, HolographicSticker, IridescentSticker,
+  PrismaticSticker, NebulaCloudSticker, AuroraBorealisSticker,
+  GalaxySpiralSticker, StarFieldSticker, SunFlareSticker,
+  MoonGlowSticker, WaterRippleSticker, FlameWaveSticker,
+  ElectricSparkSticker, LaserGridSticker, RadarSweepSticker,
+  SonarPingSticker, TargetLockSticker, ScopeViewSticker,
+  XrayVisionSticker, ThermalMapSticker, NightVisionSticker,
+  BlueprintGridSticker, SchematicSticker, CircuitBoardSticker,
+  MotherboardSticker, ChipLayoutSticker, WireFrameSticker,
+  MeshNetworkSticker, NodeGraphSticker, DataFlowSticker,
+  PipelineSticker, CircuitPathSticker, TraceLineSticker,
 } from './UniqueTemplates';
 import {
   Flame,
@@ -973,6 +1001,90 @@ export function StickerRenderer({
     case 'dot_matrix': return <DotMatrixSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'badge_collection': return <BadgeCollectionSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'mini_map': return <MiniMapSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'progress_bar': return <ProgressBarSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'circular_gauge': return <CircularGaugeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'grid_4x4': return <Grid4x4Sticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'quote_card': return <QuoteCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'comparison_split': return <ComparisonSplitSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'stacked_cards': return <StackedCardsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'floating_labels': return <FloatingLabelsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'asymmetric_layout': return <AsymmetricLayoutSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'minimalist_line': return <MinimalistLineSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'card_flip': return <CardFlipSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'masonry_grid': return <MasonryGridSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'hexagon_badge': return <HexagonBadgeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'diamond_shape': return <DiamondShapeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'triangle_layout': return <TriangleLayoutSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'arch_frame': return <ArchFrameSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'circle_cutout': return <CircleCutoutSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'rounded_stripes': return <RoundedStripesSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'gradient_border': return <GradientBorderSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'inner_shadow': return <InnerShadowSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'double_frame': return <DoubleFrameSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'zigzag_edge': return <ZigzagEdgeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'wave_bottom': return <WaveBottomSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'corner_fold': return <CornerFoldSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'tabbed_card': return <TabbedCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'accordion': return <AccordionSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'split_diagonal': return <SplitDiagonalSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'dot_pattern': return <DotPatternSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'cross_stitch': return <CrossStitchSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'chevron_rows': return <ChevronRowsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'pinstripe': return <PinstripeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'brick_layout': return <BrickLayoutSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'tile_mosaic': return <TileMosaicSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'stained_glass': return <StainedGlassSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'paper_texture': return <PaperTextureSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'carbon_fiber': return <CarbonFiberSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'brushed_metal': return <BrushedMetalSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'denim_fabric': return <DenimFabricSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'concrete_wall': return <ConcreteWallSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'rustic_wood': return <RusticWoodSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'bamboo_weave': return <BambooWeaveSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'woven_pattern': return <WovenPatternSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'leather_grain': return <LeatherGrainSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'silk_sheen': return <SilkSheenSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'velvet_plush': return <VelvetPlushSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'satin_finish': return <SatinFinishSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'matte_paper': return <MattePaperSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'glossy_surface': return <GlossySurfaceSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'translucent_glass': return <TranslucentGlassSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'frosted_glass': return <FrostedGlassSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'smoked_glass': return <SmokedGlassSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'cracked_ice': return <CrackedIceSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'liquid_metal': return <LiquidMetalSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'holographic': return <HolographicSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'iridescent': return <IridescentSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'prismatic': return <PrismaticSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'nebula_cloud': return <NebulaCloudSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'aurora_borealis': return <AuroraBorealisSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'galaxy_spiral': return <GalaxySpiralSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'star_field': return <StarFieldSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'sun_flare': return <SunFlareSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'moon_glow': return <MoonGlowSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'water_ripple': return <WaterRippleSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'flame_wave': return <FlameWaveSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'electric_spark': return <ElectricSparkSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'laser_grid': return <LaserGridSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'radar_sweep': return <RadarSweepSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'sonar_ping': return <SonarPingSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'target_lock': return <TargetLockSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'scope_view': return <ScopeViewSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'xray_vision': return <XrayVisionSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'thermal_map': return <ThermalMapSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'night_vision': return <NightVisionSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'blueprint_grid': return <BlueprintGridSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'schematic': return <SchematicSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'circuit_board': return <CircuitBoardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'motherboard': return <MotherboardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'chip_layout': return <ChipLayoutSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'wire_frame': return <WireFrameSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'mesh_network': return <MeshNetworkSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'node_graph': return <NodeGraphSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'data_flow': return <DataFlowSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'pipeline': return <PipelineSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'circuit_path': return <CircuitPathSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'trace_line': return <TraceLineSticker metrics={metrics} style={style} onEditField={onEditField} />;
     default: return <ReceiptSticker metrics={metrics} style={style} onEditField={onEditField} />;
   }
 }
