@@ -12,6 +12,7 @@ import {
   Square,
   FileText,
   Layers,
+  Sticker,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -20,10 +21,12 @@ interface NavbarProps {
   metrics: ActivityMetrics;
   setMetrics: (m: ActivityMetrics) => void;
   onCopyClipboard: () => void;
+  onCopySticker?: () => void;
   onDownloadPNG: () => void;
   onResetCanvas: () => void;
   onOpenTextSnippets: () => void;
   isCopying: boolean;
+  hasSelectedSticker?: boolean;
 }
 
 export function Navbar({
@@ -32,10 +35,12 @@ export function Navbar({
   metrics,
   setMetrics,
   onCopyClipboard,
+  onCopySticker,
   onDownloadPNG,
   onResetCanvas,
   onOpenTextSnippets,
   isCopying,
+  hasSelectedSticker,
 }: NavbarProps) {
   return (
     <header className="h-16 border-b border-zinc-800/80 glass-panel px-4 flex items-center justify-between z-40 sticky top-0">
@@ -110,6 +115,19 @@ export function Navbar({
           <RotateCcw className="w-4 h-4" />
         </button>
 
+        {/* Copy as Sticker - Only show when sticker is selected */}
+        {hasSelectedSticker && onCopySticker && (
+          <button
+            onClick={onCopySticker}
+            disabled={isCopying}
+            className="px-3.5 py-1.5 bg-purple-500 hover:bg-purple-400 text-white font-bold text-xs rounded-lg shadow-lg shadow-purple-500/20 flex items-center gap-1.5 transition-all active:scale-95 disabled:opacity-50"
+            title="Copy selected sticker as transparent PNG - paste as sticker in Instagram/TikTok"
+          >
+            <Sticker className="w-3.5 h-3.5" />
+            <span>{isCopying ? 'Copying...' : 'Copy Sticker'}</span>
+          </button>
+        )}
+
         {/* Copy to Clipboard */}
         <button
           onClick={onCopyClipboard}
@@ -117,7 +135,7 @@ export function Navbar({
           className="px-3.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs rounded-lg shadow-lg shadow-cyan-500/20 flex items-center gap-1.5 transition-all active:scale-95 disabled:opacity-50"
         >
           <Copy className="w-3.5 h-3.5" />
-          <span>{isCopying ? 'Copying...' : 'Copy Image'}</span>
+          <span>{isCopying ? 'Copying...' : 'Copy Story'}</span>
         </button>
 
         {/* Download PNG */}

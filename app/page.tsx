@@ -9,7 +9,7 @@ import {
   StickerType,
 } from '@/lib/types';
 import { DEFAULT_METRICS, DEFAULT_STYLES } from '@/lib/constants';
-import { copyCanvasToClipboard, downloadCanvasImage } from '@/lib/exportUtils';
+import { copyCanvasToClipboard, copyStickerToClipboard, downloadCanvasImage } from '@/lib/exportUtils';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
 import { CanvasStudio } from '@/components/CanvasStudio';
@@ -134,9 +134,29 @@ export default function Home() {
     setIsCopying(false);
 
     if (success) {
-      showToast('Image copied to clipboard! Ready to paste in Instagram/TikTok Story');
+      showToast('Story copied! Paste in Instagram/TikTok Story');
     } else {
       showToast('Copy failed. Click Download PNG instead');
+    }
+  };
+
+  const handleCopySticker = async () => {
+    const stickerEl = document.querySelector(`[data-sticker-id="${selectedId}"]`) as HTMLElement;
+    if (!stickerEl) {
+      showToast('Select a sticker first');
+      return;
+    }
+    setIsCopying(true);
+
+    await new Promise((r) => setTimeout(r, 50));
+
+    const success = await copyStickerToClipboard(stickerEl);
+    setIsCopying(false);
+
+    if (success) {
+      showToast('Sticker copied! Paste in Instagram/TikTok Story');
+    } else {
+      showToast('Sticker copy failed. Try Download PNG instead');
     }
   };
 
@@ -167,10 +187,12 @@ export default function Home() {
         metrics={metrics}
         setMetrics={setMetrics}
         onCopyClipboard={handleCopyClipboard}
+        onCopySticker={handleCopySticker}
         onDownloadPNG={handleDownloadPNG}
         onResetCanvas={handleResetCanvas}
         onOpenTextSnippets={() => setIsTextModalOpen(true)}
         isCopying={isCopying}
+        hasSelectedSticker={selectedId !== null}
       />
 
       <div className="flex-1 flex overflow-hidden">

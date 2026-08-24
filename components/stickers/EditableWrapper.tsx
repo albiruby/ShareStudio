@@ -67,6 +67,7 @@ export function EditableWrapper({
 
   return (
     <div
+      data-sticker-id={sticker.id}
       onClick={(e) => {
         e.stopPropagation();
         onSelect();

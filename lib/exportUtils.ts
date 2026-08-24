@@ -27,6 +27,38 @@ export async function copyCanvasToClipboard(
   }
 }
 
+export async function copyStickerToClipboard(
+  element: HTMLElement
+): Promise<boolean> {
+  try {
+    const blob = await toBlob(element, {
+      pixelRatio: 3,
+      quality: 1,
+      cacheBust: true,
+      skipAutoScale: true,
+      style: {
+        transform: 'none',
+        opacity: '1',
+      },
+    });
+
+    if (!blob) {
+      throw new Error('Failed to generate sticker blob');
+    }
+
+    if (navigator.clipboard && navigator.clipboard.write) {
+      const item = new ClipboardItem({ 'image/png': blob });
+      await navigator.clipboard.write([item]);
+      return true;
+    } else {
+      throw new Error('Clipboard API not supported');
+    }
+  } catch (err) {
+    console.error('Error copying sticker to clipboard:', err);
+    return false;
+  }
+}
+
 export async function downloadCanvasImage(
   element: HTMLElement,
   filename = 'sharestudio-run.png'
