@@ -162,6 +162,7 @@ export function Sidebar({
   const [selectedVariant, setSelectedVariant] = React.useState<string>('All');
 
   // Generate ALL combinations: 90 templates × 11 variants = 990 designs
+  // INTERLEAVE: variant-first order so every adjacent card is a DIFFERENT template
   const allDesigns: Array<{
     type: StickerType;
     label: string;
@@ -171,8 +172,8 @@ export function Sidebar({
   }> = [];
 
   let idx = 0;
-  for (const tmpl of UNIQUE_TEMPLATES) {
-    for (const variant of STYLE_VARIANTS) {
+  for (const variant of STYLE_VARIANTS) {
+    for (const tmpl of UNIQUE_TEMPLATES) {
       allDesigns.push({
         type: tmpl.type,
         label: tmpl.label,
