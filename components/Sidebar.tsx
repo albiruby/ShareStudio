@@ -293,11 +293,16 @@ export function Sidebar({
 
             {/* Design Cards Grid */}
             <div className="grid grid-cols-2 gap-2">
-              {filteredDesigns.slice(0, 200).map((design) => (
+              {filteredDesigns.slice(0, 1000).map((design) => (
                 <div
                   key={`${design.type}_${design.variant.id}`}
                   onClick={() => onAddSticker(design.type, getStyleForVariant(design.type, design.variant))}
-                  className="group relative bg-zinc-950 border border-zinc-800 hover:border-cyan-500 rounded-xl p-2 cursor-pointer transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[110px] overflow-hidden shadow-lg"
+                  className="group relative border hover:border-cyan-500 p-2 cursor-pointer transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[110px] overflow-hidden shadow-lg"
+                  style={{
+                    backgroundColor: design.variant.bg,
+                    borderColor: design.variant.border,
+                    borderRadius: design.variant.borderRadius,
+                  }}
                 >
                   <div className="scale-[0.42] origin-center transform-gpu pointer-events-none my-auto">
                     <StickerRenderer
@@ -306,19 +311,29 @@ export function Sidebar({
                       style={getStyleForVariant(design.type, design.variant)}
                     />
                   </div>
-                  {/* Variant color dot */}
-                  <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full border border-zinc-700" style={{ backgroundColor: design.variant.accent }} />
-                  {/* Label */}
-                  <div className="absolute inset-x-0 bottom-0 bg-zinc-900/90 py-1 text-center border-t border-zinc-800 opacity-90 group-hover:opacity-100 group-hover:bg-cyan-500 group-hover:text-black transition-all">
-                    <span className="text-[9px] font-bold truncate px-1 block">{design.label} · {design.variant.label}</span>
+                  <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full border" style={{ backgroundColor: design.variant.accent, borderColor: design.variant.border }} />
+                  <div className="absolute inset-x-0 bottom-0 py-1 text-center border-t opacity-90 group-hover:opacity-100 transition-all"
+                    style={{
+                      backgroundColor: design.variant.accent,
+                      color: design.variant.bg,
+                      borderColor: design.variant.border,
+                    }}
+                  >
+                    <span className="text-[9px] font-bold truncate px-1 block"
+                      style={{
+                        fontFamily: design.variant.fontFamily,
+                        letterSpacing: design.variant.letterSpacing,
+                        textTransform: design.variant.textTransform,
+                      }}
+                    >{design.label} · {design.variant.label}</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            {filteredDesigns.length > 200 && (
+            {filteredDesigns.length > 1000 && (
               <div className="text-center text-[10px] text-zinc-500 py-2">
-                Showing 200 of {filteredDesigns.length} designs. Use filters to narrow down.
+                Showing 1000 of {filteredDesigns.length} designs. Use filters to narrow down.
               </div>
             )}
           </div>

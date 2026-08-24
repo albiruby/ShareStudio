@@ -10,20 +10,27 @@ export interface StyleVariant {
   accent: string;
   border: string;
   mood: string;
+  fontFamily: string;
+  fontSize: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  textTransform: 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+  borderRadius: string;
+  decoration: 'none' | 'dots' | 'stripes' | 'glow' | 'shadow' | 'outline' | 'gradient' | 'emboss' | 'scanlines' | 'vignette' | 'noise';
+  letterSpacing: string;
+  fontWeight: string;
 }
 
 export const STYLE_VARIANTS: StyleVariant[] = [
-  { id: 'default',    label: 'Default',     bg: '#18181b', text: '#ffffff', accent: '#00E5FF', border: '#27272a', mood: 'dark' },
-  { id: 'neon',       label: 'Neon',        bg: '#050515', text: '#00ffcc', accent: '#00ffcc', border: '#00ffcc', mood: 'glow' },
-  { id: 'cyberpunk',  label: 'Cyberpunk',   bg: '#0d0221', text: '#ff007f', accent: '#ff007f', border: '#ff007f', mood: 'neon' },
-  { id: 'gold',       label: 'Retro Gold',  bg: '#1c1917', text: '#facc15', accent: '#f59e0b', border: '#ca8a04', mood: 'warm' },
-  { id: 'mono',       label: 'Monochrome',  bg: '#000000', text: '#ffffff', accent: '#ffffff', border: '#ffffff', mood: 'clean' },
-  { id: 'pastel',     label: 'Pastel',      bg: '#fef08a', text: '#1c1917', accent: '#fde047', border: '#fde047', mood: 'soft' },
-  { id: 'crimson',    label: 'Crimson',     bg: '#450a0a', text: '#fca5a5', accent: '#ef4444', border: '#ef4444', mood: 'bold' },
-  { id: 'ocean',      label: 'Ocean',       bg: '#0c4a6e', text: '#e0f2fe', accent: '#38bdf8', border: '#0284c7', mood: 'cool' },
-  { id: 'forest',     label: 'Forest',      bg: '#022c22', text: '#d1fae5', accent: '#34d399', border: '#059669', mood: 'nature' },
-  { id: 'sunset',     label: 'Sunset',      bg: '#431407', text: '#ffedd5', accent: '#fb923c', border: '#ea580c', mood: 'warm' },
-  { id: 'midnight',   label: 'Midnight',    bg: '#1e1b4b', text: '#e0e7ff', accent: '#818cf8', border: '#6366f1', mood: 'elegant' },
+  { id: 'default',    label: 'Default',     bg: '#18181b', text: '#ffffff', accent: '#00E5FF', border: '#27272a', mood: 'dark',   fontFamily: 'Inter, sans-serif',          fontSize: 'sm', textTransform: 'none',     borderRadius: '12px', decoration: 'none',      letterSpacing: '0em',   fontWeight: '400' },
+  { id: 'neon',       label: 'Neon',        bg: '#050515', text: '#00ffcc', accent: '#00ffcc', border: '#00ffcc', mood: 'glow',   fontFamily: 'JetBrains Mono, monospace', fontSize: 'xs', textTransform: 'uppercase', borderRadius: '0px',  decoration: 'glow',      letterSpacing: '0.05em', fontWeight: '700' },
+  { id: 'cyberpunk',  label: 'Cyberpunk',   bg: '#0d0221', text: '#ff007f', accent: '#ff007f', border: '#ff007f', mood: 'neon',   fontFamily: '"Press Start 2P", cursive',  fontSize: 'xs', textTransform: 'uppercase', borderRadius: '0px',  decoration: 'scanlines', letterSpacing: '0.08em', fontWeight: '400' },
+  { id: 'gold',       label: 'Retro Gold',  bg: '#1c1917', text: '#facc15', accent: '#f59e0b', border: '#ca8a04', mood: 'warm',   fontFamily: 'Caveat, cursive',            fontSize: 'lg', textTransform: 'capitalize',borderRadius: '8px',  decoration: 'emboss',    letterSpacing: '0.02em', fontWeight: '600' },
+  { id: 'mono',       label: 'Monochrome',  bg: '#000000', text: '#ffffff', accent: '#ffffff', border: '#ffffff', mood: 'clean',  fontFamily: 'JetBrains Mono, monospace', fontSize: 'xs', textTransform: 'uppercase', borderRadius: '0px',  decoration: 'dots',      letterSpacing: '0.1em',  fontWeight: '300' },
+  { id: 'pastel',     label: 'Pastel',      bg: '#fef08a', text: '#1c1917', accent: '#fde047', border: '#fde047', mood: 'soft',   fontFamily: 'Caveat, cursive',            fontSize: 'xl', textTransform: 'none',     borderRadius: '20px', decoration: 'shadow',    letterSpacing: '0em',   fontWeight: '400' },
+  { id: 'crimson',    label: 'Crimson',     bg: '#450a0a', text: '#fca5a5', accent: '#ef4444', border: '#ef4444', mood: 'bold',   fontFamily: 'Inter, sans-serif',          fontSize: 'sm', textTransform: 'uppercase', borderRadius: '4px',  decoration: 'outline',   letterSpacing: '0.06em', fontWeight: '900' },
+  { id: 'ocean',      label: 'Ocean',       bg: '#0c4a6e', text: '#e0f2fe', accent: '#38bdf8', border: '#0284c7', mood: 'cool',   fontFamily: 'Inter, sans-serif',          fontSize: 'sm', textTransform: 'none',     borderRadius: '16px', decoration: 'gradient',  letterSpacing: '0em',   fontWeight: '500' },
+  { id: 'forest',     label: 'Forest',      bg: '#022c22', text: '#d1fae5', accent: '#34d399', border: '#059669', mood: 'nature', fontFamily: 'Caveat, cursive',            fontSize: 'lg', textTransform: 'none',     borderRadius: '12px', decoration: 'noise',     letterSpacing: '0.01em', fontWeight: '600' },
+  { id: 'sunset',     label: 'Sunset',      bg: '#431407', text: '#ffedd5', accent: '#fb923c', border: '#ea580c', mood: 'warm',   fontFamily: 'Inter, sans-serif',          fontSize: 'md', textTransform: 'capitalize',borderRadius: '8px',  decoration: 'vignette',  letterSpacing: '0.03em', fontWeight: '700' },
+  { id: 'midnight',   label: 'Midnight',    bg: '#1e1b4b', text: '#e0e7ff', accent: '#818cf8', border: '#6366f1', mood: 'elegant',fontFamily: '"Press Start 2P", cursive',  fontSize: 'xs', textTransform: 'none',     borderRadius: '4px',  decoration: 'stripes',   letterSpacing: '0.04em', fontWeight: '400' },
 ];
 
 export const DEFAULT_METRICS: ActivityMetrics = {
