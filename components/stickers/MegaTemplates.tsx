@@ -1,14 +1,139 @@
 'use client';
 
 import React from 'react';
-import { ActivityMetrics, StickerStyle, StickerType } from '@/lib/types';
-import { Flame, Heart, MapPin, Zap, Check, Phone, Video, AlertTriangle, Trophy, Music, Disc, Plane, Activity, Radio, Star, Award, Compass, Shield, Footprints, Bike, Crown, Timer, Target, BarChart, TrendingUp } from 'lucide-react';
+import { ActivityMetrics, StickerStyle, StickerType, ParametricConfig } from '@/lib/types';
+import { ParametricStickerRenderer } from './ParametricRenderer';
+import {
+  Flame,
+  Heart,
+  Trophy,
+  Medal,
+  MapPin,
+  Zap,
+  Clock,
+  Shield,
+  Flag,
+  Battery,
+  Check,
+  Star,
+  Crown,
+  Sparkles,
+  Target,
+  Compass,
+  Mountain,
+  Activity,
+  BarChart,
+  TrendingUp,
+  Award,
+  Gauge,
+  Timer,
+  Watch,
+  Navigation,
+  Dumbbell,
+  Footprints,
+  Bike,
+  CircleDot,
+  Layers,
+  Box,
+  Tag,
+  Ticket,
+  FileText,
+  Music,
+  Disc,
+  Radio,
+  Plane,
+  Smile,
+  ThumbsUp,
+  Coffee,
+  Sun,
+  Moon,
+  Wind,
+  Thermometer,
+  CloudLightning,
+  ShieldCheck,
+  CheckCircle2,
+  AlertCircle,
+  AlertOctagon,
+  RefreshCw,
+  Eye,
+  Share2,
+  Copy,
+  Hexagon,
+  Octagon,
+  Triangle,
+  Square,
+  Circle,
+  AlertTriangle,
+  Phone,
+} from 'lucide-react';
 
 interface TemplateProps {
   metrics: ActivityMetrics;
   style: StickerStyle;
   onEditField?: (field: string, value: string) => void;
 }
+
+const ICON_MAP: Record<string, any> = {
+  Flame,
+  Heart,
+  Trophy,
+  Medal,
+  MapPin,
+  Zap,
+  Clock,
+  Shield,
+  Flag,
+  Battery,
+  Check,
+  Star,
+  Crown,
+  Sparkles,
+  Target,
+  Compass,
+  Mountain,
+  Activity,
+  BarChart,
+  TrendingUp,
+  Award,
+  Gauge,
+  Timer,
+  Watch,
+  Navigation,
+  Dumbbell,
+  Footprints,
+  Bike,
+  CircleDot,
+  Layers,
+  Box,
+  Tag,
+  Ticket,
+  FileText,
+  Music,
+  Disc,
+  Radio,
+  Plane,
+  Smile,
+  ThumbsUp,
+  Coffee,
+  Sun,
+  Moon,
+  Wind,
+  Thermometer,
+  CloudLightning,
+  ShieldCheck,
+  CheckCircle2,
+  AlertCircle,
+  AlertOctagon,
+  RefreshCw,
+  Eye,
+  Share2,
+  Copy,
+  Hexagon,
+  Octagon,
+  Triangle,
+  Square,
+  Circle,
+};
 
 function EditableField({
   value,
@@ -59,6 +184,37 @@ function EditableField({
     >
       {value}
     </span>
+  );
+}
+
+// Standalone Icon Badge Sticker (Clicking any icon in Icons tab renders this!)
+export function IconBadgeSticker({ metrics, style, onEditField }: TemplateProps) {
+  const IconComponent = (style.iconName && ICON_MAP[style.iconName]) || Zap;
+  return (
+    <div
+      className="p-3 shadow-2xl border flex items-center gap-3 select-none"
+      style={{
+        backgroundColor: style.backgroundColor,
+        color: style.textColor,
+        borderColor: style.borderColor,
+        borderRadius: `${style.borderRadius}px`,
+        opacity: style.opacity,
+      }}
+    >
+      <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+        <IconComponent className="w-6 h-6" />
+      </div>
+      <div>
+        <div className="font-extrabold text-lg leading-tight">
+          <EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} />{' '}
+          <span className="text-xs">{metrics.unit}</span>
+        </div>
+        <div className="text-[11px] opacity-80 font-mono">
+          <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> •{' '}
+          <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -528,7 +684,7 @@ export function CyberpunkNeonSticker({ metrics, style, onEditField }: TemplatePr
   );
 }
 
-// NEW 35: 4-Quadrant Workout Summary Grid
+// 35. 4-Quadrant Workout Summary Grid
 export function WorkoutSummaryGridSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
     <div className="w-64 p-3 bg-zinc-950 text-white font-sans text-xs rounded-2xl border border-zinc-800 shadow-2xl grid grid-cols-2 gap-2" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
@@ -552,7 +708,7 @@ export function WorkoutSummaryGridSticker({ metrics, style, onEditField }: Templ
   );
 }
 
-// NEW 36: Weekly Recap Ring Progress Badge
+// 36. Weekly Recap Ring Progress Badge
 export function WeeklyRecapRingSticker({ metrics, style, onEditField }: TemplateProps) {
   return (
     <div className="w-64 p-4 bg-zinc-900 text-white font-sans text-xs rounded-2xl border border-zinc-700 shadow-2xl flex items-center gap-3" style={{ backgroundColor: style.backgroundColor, borderColor: style.borderColor, color: style.textColor }}>
@@ -568,19 +724,89 @@ export function WeeklyRecapRingSticker({ metrics, style, onEditField }: Template
   );
 }
 
+// 37. Ultra Clean 1-Line Minimalist Badge
+export function MinimalMinimalistSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="px-4 py-1.5 bg-black/80 backdrop-blur border border-white/20 rounded-full text-white font-sans text-xs flex items-center gap-2">
+      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+      <span className="font-bold"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> {metrics.unit}</span>
+      <span className="text-zinc-400">•</span>
+      <span className="text-zinc-300"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></span>
+    </div>
+  );
+}
+
+// 38. Retro 70s Sport Badge
+export function RetroBadgeSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="p-3 bg-stone-900 border-2 border-amber-500 rounded-2xl text-amber-400 font-sans text-center w-56 shadow-2xl">
+      <div className="text-[10px] tracking-widest uppercase text-amber-500 font-bold border-b border-amber-800 pb-1 mb-1">ATHLETIC DEPT 1974</div>
+      <div className="text-3xl font-black text-white"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</div>
+      <div className="text-xs font-mono mt-1 text-amber-300"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /> /KM</div>
+    </div>
+  );
+}
+
+// 39. Futuristic Glass HUD
+export function FuturisticGlassSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="p-4 glass-panel border border-sky-500/40 text-sky-400 font-mono text-center w-64 rounded-2xl glow-cyan">
+      <div className="text-[9px] uppercase tracking-widest text-sky-300 mb-1">SYS // TELEMETRY HUD</div>
+      <div className="text-3xl font-black text-white"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> <span className="text-sky-400 text-sm">KM</span></div>
+      <div className="flex justify-around text-[10px] mt-2 pt-2 border-t border-sky-500/30 text-sky-200">
+        <span>PACE: <EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></span>
+        <span>TIME: <EditableField value={metrics.time} onSave={(v) => onEditField?.('time', v)} /></span>
+      </div>
+    </div>
+  );
+}
+
+// 40. Minimal Circular Stat Badge
+export function MinimalCircleSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="w-32 h-32 rounded-full bg-zinc-950 border-2 border-zinc-700 text-white flex flex-col items-center justify-center text-center p-2 shadow-2xl">
+      <div className="text-xs text-zinc-400 uppercase font-bold">RUN</div>
+      <div className="text-2xl font-black text-cyan-400 my-0.5"><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /></div>
+      <div className="text-[10px] text-zinc-400 font-mono"><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></div>
+    </div>
+  );
+}
+
+// 41. Compact Split Box
+export function CompactSplitSticker({ metrics, style, onEditField }: TemplateProps) {
+  return (
+    <div className="w-48 p-2.5 bg-purple-950 text-purple-200 border border-purple-800 rounded-xl font-mono text-xs space-y-1">
+      <div className="flex justify-between font-bold border-b border-purple-800 pb-1">
+        <span>SPLIT LAP</span>
+        <span className="text-purple-400">BEST KM</span>
+      </div>
+      <div className="flex justify-between font-bold text-white text-sm">
+        <span><EditableField value={metrics.distance} onSave={(v) => onEditField?.('distance', v)} /> KM</span>
+        <span><EditableField value={metrics.pace} onSave={(v) => onEditField?.('pace', v)} /></span>
+      </div>
+    </div>
+  );
+}
+
 // Master Dispatcher component
 export function StickerRenderer({
   type,
   metrics,
   style,
   onEditField,
+  parametricConfig,
 }: {
   type: StickerType;
   metrics: ActivityMetrics;
   style: StickerStyle;
   onEditField?: (field: string, value: string) => void;
+  parametricConfig?: ParametricConfig;
 }) {
   switch (type) {
+    case 'parametric':
+      if (parametricConfig) return <ParametricStickerRenderer config={parametricConfig} metrics={metrics} />;
+      return <ReceiptSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'icon_badge': return <IconBadgeSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'red_bold_header': return <RedBoldHeaderSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'elevation_gradient': return <ElevationGradientSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'minimal_horizontal': return <MinimalHorizontalSticker metrics={metrics} style={style} onEditField={onEditField} />;
@@ -617,6 +843,11 @@ export function StickerRenderer({
     case 'cyberpunk_neon': return <CyberpunkNeonSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'workout_summary_grid': return <WorkoutSummaryGridSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'weekly_recap_ring': return <WeeklyRecapRingSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'minimal_minimalist': return <MinimalMinimalistSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'retro_badge': return <RetroBadgeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'futuristic_glass': return <FuturisticGlassSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'minimal_circle': return <MinimalCircleSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'compact_split': return <CompactSplitSticker metrics={metrics} style={style} onEditField={onEditField} />;
     default: return <ReceiptSticker metrics={metrics} style={style} onEditField={onEditField} />;
   }
 }

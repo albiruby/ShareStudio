@@ -53,17 +53,13 @@ export type StickerType =
   | 'cyberpunk_neon'
   | 'workout_summary_grid'
   | 'weekly_recap_ring'
-  | 'icon_badge';
-
-export type StyleVariant =
-  | 'default'
-  | 'neon'
-  | 'cyberpunk'
-  | 'retro_gold'
-  | 'monochrome'
-  | 'pastel'
-  | 'vivid_red'
-  | 'ocean_blue';
+  | 'icon_badge'
+  | 'minimal_minimalist'
+  | 'retro_badge'
+  | 'futuristic_glass'
+  | 'minimal_circle'
+  | 'compact_split'
+  | 'parametric';
 
 export interface StickerStyle {
   textColor: string;
@@ -74,7 +70,23 @@ export interface StickerStyle {
   fontSize: number;
   opacity: number;
   borderRadius: number;
-  variant?: StyleVariant;
+  iconName?: string;
+}
+
+export interface ParametricConfig {
+  id: string;
+  label: string;
+  category: string;
+  layout: string;
+  metricsShown: string[];
+  fontClass: string;
+  borderStyle: 'solid' | 'dashed' | 'double' | 'none';
+  cornerRadius: number;
+  bgColor: string;
+  textColor: string;
+  accentColor: string;
+  borderColor: string;
+  iconIdx: number;
 }
 
 export interface StickerInstance {
@@ -87,8 +99,18 @@ export interface StickerInstance {
   rotation: number;
   zIndex: number;
   style: StickerStyle;
-  customData?: Partial<ActivityMetrics> & { [key: string]: any };
+  parametricConfig?: ParametricConfig;
 }
+
+export type StyleVariant =
+  | 'default'
+  | 'neon'
+  | 'cyberpunk'
+  | 'retro_gold'
+  | 'monochrome'
+  | 'pastel'
+  | 'vivid_red'
+  | 'ocean_blue';
 
 export interface BackgroundSettings {
   imageUrl: string | null;

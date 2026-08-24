@@ -139,5 +139,11 @@ export const DEFAULT_STYLES: Record<StickerType, StickerStyle> = {
   cyberpunk_neon: { ...BASE_STYLE, textColor: '#00ffcc', backgroundColor: '#050515', borderColor: '#00ffcc', fontFamily: 'mono', borderRadius: 4 },
   workout_summary_grid: { ...BASE_STYLE, textColor: '#ffffff', backgroundColor: '#09090b', borderRadius: 16 },
   weekly_recap_ring: { ...BASE_STYLE, textColor: '#ffffff', backgroundColor: '#18181b', borderRadius: 20 },
-  icon_badge: { ...BASE_STYLE, textColor: '#00E5FF', backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: 9999 },
+  icon_badge: { ...BASE_STYLE, textColor: '#00E5FF', backgroundColor: 'rgba(15,23,42,0.9)', borderColor: 'rgba(0,229,255,0.3)', borderRadius: 16 },
+  minimal_minimalist: { ...BASE_STYLE, textColor: '#ffffff', backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: 9999 },
+  retro_badge: { ...BASE_STYLE, textColor: '#fb923c', backgroundColor: '#1c1917', borderColor: '#ea580c', borderRadius: 12 },
+  futuristic_glass: { ...BASE_STYLE, textColor: '#38bdf8', backgroundColor: 'rgba(15,23,42,0.75)', borderColor: '#0284c7', borderRadius: 16 },
+  minimal_circle: { ...BASE_STYLE, textColor: '#ffffff', backgroundColor: '#09090b', borderColor: '#3f3f46', borderRadius: 9999 },
+  compact_split: { ...BASE_STYLE, textColor: '#a855f7', backgroundColor: '#18181b', borderColor: '#7e22ce', borderRadius: 8 },
+  parametric: { ...BASE_STYLE, textColor: '#ffffff', backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: 12 },
 };
