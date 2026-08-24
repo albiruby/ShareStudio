@@ -4,6 +4,39 @@ import React from 'react';
 import { ActivityMetrics, StickerStyle, StickerType, ParametricConfig } from '@/lib/types';
 import { ParametricStickerRenderer } from './ParametricRenderer';
 import {
+  ElevationWaveSticker, HorizontalMetricsSticker, SerifItalicSticker,
+  ReceiptFullSticker, SplitsRomanSticker, TextSentenceSticker,
+  LargeTypographySticker, DataTableSticker, BarChartPaceSticker,
+  LocationCardSticker, DayBadgeSticker, DualStatsSticker,
+  ColumnNumbersSticker, HighlightBlocksSticker, CumulativeListSticker,
+  VerifiedBadgeSticker, TimeRangeSticker, PaceChartSticker,
+  ItalicTitleSticker, LocationPillSticker, MapRouteSticker,
+  SquareFrameSticker, ColoredBarSticker, DataRowsSticker,
+  CalendarCardSticker, WeeklyListSticker, DescriptionCardSticker,
+  PaceZonesSticker, ElevationAreaSticker, TextParagraphSticker,
+  HighlightBarSticker, KilometresBoldSticker, TrademarkStyleSticker,
+  HeartPillSticker, LedClockSticker, BoldLocationSticker,
+  RouteNumberSticker, AppWidgetSticker, MoneyTagSticker,
+  MultilingualSticker, SimpleTableSticker, RepeatTextSticker,
+  MonthlyTotalSticker, WeeklyDotsSticker, WeeklySummarySticker,
+  WeeklyTableSticker, CircleGridSticker, MonthlyChartSticker,
+  ProgressPctSticker, AreaChartWeeklySticker, DotProgressSticker,
+  SquareProgressSticker, VerticalBarsSticker, StackedDaysSticker,
+  RunningTotalSticker, WeeklyMapSticker,
+  GradientMeshSticker, NeoBrutalistSticker, GlassCardSticker,
+  NeonGlowSticker, FilmStripSticker, NewspaperColumnSticker,
+  TerminalGreenSticker, VhsRetroSticker, NotebookLineSticker,
+  BlueprintSticker, EmbossedSticker, MetallicSticker,
+  PixelArtSticker, AchievementSticker, LeaderboardSticker,
+  CountdownSticker, ProgressRingSticker, RadialChartSticker,
+  HeatmapSticker, TimelineSticker, TabUiSticker,
+  CardStackSticker, RibbonSticker, NotificationSticker,
+  MusicPlayerSticker, WeatherCardSticker, SplitsBarChartSticker,
+  StackedMetricsSticker, RunningManSticker, BorderedFrameSticker,
+  StatRibbonSticker, DotMatrixSticker, BadgeCollectionSticker,
+  MiniMapSticker,
+} from './UniqueTemplates';
+import {
   Flame,
   Heart,
   Trophy,
@@ -848,6 +881,98 @@ export function StickerRenderer({
     case 'futuristic_glass': return <FuturisticGlassSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'minimal_circle': return <MinimalCircleSticker metrics={metrics} style={style} onEditField={onEditField} />;
     case 'compact_split': return <CompactSplitSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    // ── Unique Structured Templates ──
+    case 'elevation_wave': return <ElevationWaveSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'horizontal_metrics': return <HorizontalMetricsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'serif_italic': return <SerifItalicSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'receipt_full': return <ReceiptFullSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'splits_roman': return <SplitsRomanSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'text_sentence': return <TextSentenceSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'large_typography': return <LargeTypographySticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'data_table': return <DataTableSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'bar_chart_pace': return <BarChartPaceSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'location_card': return <LocationCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'day_badge': return <DayBadgeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'dual_stats': return <DualStatsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'column_numbers': return <ColumnNumbersSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'highlight_blocks': return <HighlightBlocksSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'cumulative_list': return <CumulativeListSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'verified_badge': return <VerifiedBadgeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'time_range': return <TimeRangeSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'pace_chart': return <PaceChartSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'italic_title': return <ItalicTitleSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'location_pill': return <LocationPillSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'map_route': return <MapRouteSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'square_frame': return <SquareFrameSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'colored_bar': return <ColoredBarSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'data_rows': return <DataRowsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'calendar_card': return <CalendarCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weekly_list': return <WeeklyListSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'description_card': return <DescriptionCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'pace_zones': return <PaceZonesSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'elevation_area': return <ElevationAreaSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'text_paragraph': return <TextParagraphSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'highlight_bar': return <HighlightBarSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'kilometres_bold': return <KilometresBoldSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'trademark_style': return <TrademarkStyleSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'heart_pill': return <HeartPillSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'led_clock': return <LedClockSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'bold_location': return <BoldLocationSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'route_number': return <RouteNumberSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'app_widget': return <AppWidgetSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'money_tag': return <MoneyTagSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'multilingual': return <MultilingualSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'simple_table': return <SimpleTableSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'repeat_text': return <RepeatTextSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'monthly_total': return <MonthlyTotalSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weekly_dots': return <WeeklyDotsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weekly_summary': return <WeeklySummarySticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weekly_table': return <WeeklyTableSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'circle_grid': return <CircleGridSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'monthly_chart': return <MonthlyChartSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'progress_pct': return <ProgressPctSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'area_chart_weekly': return <AreaChartWeeklySticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'dot_progress': return <DotProgressSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'square_progress': return <SquareProgressSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'vertical_bars': return <VerticalBarsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'stacked_days': return <StackedDaysSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'running_total': return <RunningTotalSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weekly_map': return <WeeklyMapSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    // ── Extra Unique Templates ──
+    case 'gradient_mesh': return <GradientMeshSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'neo_brutalist': return <NeoBrutalistSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'glass_card': return <GlassCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'neon_glow': return <NeonGlowSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'film_strip': return <FilmStripSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'newspaper_column': return <NewspaperColumnSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'terminal_green': return <TerminalGreenSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'vhs_retro': return <VhsRetroSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'notebook_line': return <NotebookLineSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'blueprint': return <BlueprintSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'embossed': return <EmbossedSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'metallic': return <MetallicSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'pixel_art': return <PixelArtSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'achievement': return <AchievementSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'leaderboard': return <LeaderboardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'countdown': return <CountdownSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'progress_ring': return <ProgressRingSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'radial_chart': return <RadialChartSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'heatmap': return <HeatmapSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'timeline': return <TimelineSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'tab_ui': return <TabUiSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'card_stack': return <CardStackSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'ribbon': return <RibbonSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'notification': return <NotificationSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'music_player': return <MusicPlayerSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'weather_card': return <WeatherCardSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'splits_bar_chart': return <SplitsBarChartSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'stacked_metrics': return <StackedMetricsSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'running_man': return <RunningManSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'bordered_frame': return <BorderedFrameSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'stat_ribbon': return <StatRibbonSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'dot_matrix': return <DotMatrixSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'badge_collection': return <BadgeCollectionSticker metrics={metrics} style={style} onEditField={onEditField} />;
+    case 'mini_map': return <MiniMapSticker metrics={metrics} style={style} onEditField={onEditField} />;
     default: return <ReceiptSticker metrics={metrics} style={style} onEditField={onEditField} />;
   }
 }

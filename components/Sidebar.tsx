@@ -1,75 +1,20 @@
 'use client';
 
 import React from 'react';
-import { StickerType, ActivityMetrics, BackgroundSettings, StyleVariant } from '@/lib/types';
+import { StickerType, ActivityMetrics, BackgroundSettings } from '@/lib/types';
 import { DEFAULT_STYLES } from '@/lib/constants';
 import { StickerRenderer } from './stickers/MegaTemplates';
 import { PhotoControls } from './PhotoControls';
 import {
-  LayoutGrid,
-  Shapes,
-  Image as ImageIcon,
-  Sliders,
-  Search,
-  Flame,
-  Heart,
-  Trophy,
-  Medal,
-  MapPin,
-  Zap,
-  Clock,
-  Shield,
-  Flag,
-  Battery,
-  Check,
-  Star,
-  Crown,
-  Sparkles,
-  Target,
-  Compass,
-  Mountain,
-  Activity,
-  BarChart,
-  TrendingUp,
-  Award,
-  Gauge,
-  Timer,
-  Watch,
-  Navigation,
-  Dumbbell,
-  Footprints,
-  Bike,
-  CircleDot,
-  Layers,
-  Box,
-  Tag,
-  Ticket,
-  FileText,
-  Music,
-  Disc,
-  Radio,
-  Plane,
-  Smile,
-  ThumbsUp,
-  Coffee,
-  Sun,
-  Moon,
-  Wind,
-  Thermometer,
-  CloudLightning,
-  ShieldCheck,
-  CheckCircle2,
-  AlertCircle,
-  AlertOctagon,
-  RefreshCw,
-  Eye,
-  Share2,
-  Copy,
-  Hexagon,
-  Octagon,
-  Triangle,
-  Square,
-  Circle,
+  LayoutGrid, Shapes, Image as ImageIcon, Sliders, Search,
+  Flame, Heart, Trophy, Medal, MapPin, Zap, Clock, Shield, Flag, Battery,
+  Check, Star, Crown, Sparkles, Target, Compass, Mountain, Activity,
+  BarChart, TrendingUp, Award, Gauge, Timer, Watch, Navigation,
+  Dumbbell, Footprints, Bike, CircleDot, Layers, Box, Tag, Ticket,
+  FileText, Music, Disc, Radio, Plane, Smile, ThumbsUp, Coffee,
+  Sun, Moon, Wind, Thermometer, CloudLightning, ShieldCheck,
+  CheckCircle2, AlertCircle, AlertOctagon, RefreshCw, Eye, Share2,
+  Copy, Hexagon, Octagon, Triangle, Square, Circle,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -83,132 +28,142 @@ interface SidebarProps {
 interface TemplateItem {
   type: StickerType;
   label: string;
-  category: 'Tags' | 'Parodies' | 'Metrics' | 'Retro' | 'Editorial';
-  variant?: StyleVariant;
+  category: 'Single' | 'Recap' | 'Chart' | 'Map' | 'Retro' | 'Badge';
 }
 
-const BASE_TEMPLATES: Array<{ type: StickerType; label: string; category: TemplateItem['category'] }> = [
-  { type: 'red_bold_header', label: 'Red Bold Header', category: 'Tags' },
-  { type: 'elevation_gradient', label: 'Elevation Gradient Wave', category: 'Metrics' },
-  { type: 'minimal_horizontal', label: 'Minimal Horizontal Bar', category: 'Tags' },
-  { type: 'serif_classic', label: 'Serif Classic Tag', category: 'Editorial' },
-  { type: 'digital_red_led', label: 'Digital LED Scoreboard', category: 'Retro' },
-  { type: 'barcode_ticket', label: 'Barcode Ticket Stub', category: 'Tags' },
-  { type: 'color_badge', label: 'Yellow Color Badge', category: 'Tags' },
-  { type: 'runner_bold', label: 'Runner Bold Emblem', category: 'Tags' },
-  { type: 'splits_list', label: 'Splits List Breakdown', category: 'Metrics' },
-  { type: 'finish_banner', label: 'Finish Line Banner', category: 'Tags' },
-  { type: 'receipt', label: 'Thermal Cashier Receipt', category: 'Parodies' },
-  { type: 'json_code', label: 'Developer JSON Code', category: 'Retro' },
-  { type: 'speedometer', label: 'Speedometer Top Speed', category: 'Metrics' },
-  { type: 'splits_histogram', label: 'Splits Pace Histogram', category: 'Metrics' },
-  { type: 'polyline_track', label: 'Polyline Route Track', category: 'Tags' },
-  { type: 'windows_error', label: 'Windows OS Alert Box', category: 'Parodies' },
-  { type: 'mbanking', label: 'Mobile Banking Success', category: 'Parodies' },
-  { type: 'getty_stamp', label: 'ShareStudio Watermark Stamp', category: 'Parodies' },
-  { type: 'cigarette_warning', label: 'Marathon Health Warning', category: 'Parodies' },
-  { type: 'imessage', label: 'iOS iMessage Bubble', category: 'Parodies' },
-  { type: 'ios_call', label: 'iOS Call Banner', category: 'Parodies' },
-  { type: 'sticky_note', label: 'Yellow Taped Sticky Note', category: 'Parodies' },
-  { type: 'nutrition_facts', label: 'Nutrition Facts Table', category: 'Parodies' },
-  { type: 'instagram_post', label: 'Social Post Parody', category: 'Parodies' },
-  { type: 'serif_magazine', label: 'Editorial Magazine Serif', category: 'Editorial' },
-  { type: 'marathon_milestone', label: 'Personal Best Record', category: 'Metrics' },
-  { type: 'cadence_rpm', label: 'Cadence RPM Stride', category: 'Metrics' },
-  { type: 'hr_zone_meter', label: 'Heart Rate Zone 2 Meter', category: 'Metrics' },
-  { type: 'newspaper_headline', label: 'Newspaper Headline Banner', category: 'Retro' },
-  { type: 'spotify_player', label: 'Now Playing Music Player', category: 'Parodies' },
-  { type: 'airport_boarding_pass', label: 'Airport Boarding Pass', category: 'Tags' },
-  { type: 'cassette_tape', label: '80s Cassette Tape Mix', category: 'Retro' },
-  { type: 'polaroid_frame', label: 'Vintage Polaroid Frame', category: 'Retro' },
-  { type: 'cyberpunk_neon', label: 'Cyberpunk HUD Badge', category: 'Retro' },
-  { type: 'workout_summary_grid', label: '4-Quadrant Workout Grid', category: 'Metrics' },
-  { type: 'weekly_recap_ring', label: 'Weekly Target Recap Ring', category: 'Metrics' },
+const UNIQUE_TEMPLATES: TemplateItem[] = [
+  // ── Single Tags (Structurally unique layouts) ──
+  { type: 'red_bold_header', label: 'Red Bold Header', category: 'Single' },
+  { type: 'elevation_wave', label: 'Elevation Wave', category: 'Single' },
+  { type: 'horizontal_metrics', label: 'Horizontal Metrics', category: 'Single' },
+  { type: 'serif_italic', label: 'Serif Italic', category: 'Single' },
+  { type: 'digital_red_led', label: 'Digital LED Scoreboard', category: 'Single' },
+  { type: 'receipt_full', label: 'Full Thermal Receipt', category: 'Single' },
+  { type: 'color_badge', label: 'Yellow Badge', category: 'Single' },
+  { type: 'runner_bold', label: 'Runner Bold', category: 'Single' },
+  { type: 'splits_roman', label: 'Splits Roman Bars', category: 'Single' },
+  { type: 'finish_banner', label: 'Finish Banner', category: 'Single' },
+  { type: 'json_code', label: 'JSON Code Block', category: 'Single' },
+  { type: 'text_sentence', label: 'Text Sentence', category: 'Single' },
+  { type: 'large_typography', label: 'Large Typography', category: 'Single' },
+  { type: 'day_badge', label: 'Day Badge', category: 'Single' },
+  { type: 'dual_stats', label: 'Dual Stats', category: 'Single' },
+  { type: 'column_numbers', label: 'Column Numbers', category: 'Single' },
+  { type: 'highlight_blocks', label: 'Highlight Blocks', category: 'Single' },
+  { type: 'cumulative_list', label: 'Cumulative Time List', category: 'Single' },
+  { type: 'verified_badge', label: 'Verified Badge', category: 'Single' },
+  { type: 'time_range', label: 'Time Range', category: 'Single' },
+  { type: 'pace_chart', label: 'Pace Chart', category: 'Single' },
+  { type: 'italic_title', label: 'Italic Title', category: 'Single' },
+  { type: 'location_pill', label: 'Location Pill', category: 'Single' },
+  { type: 'square_frame', label: 'Square Frame', category: 'Single' },
+  { type: 'colored_bar', label: 'Colored Bar', category: 'Single' },
+  { type: 'data_rows', label: 'Data Rows', category: 'Single' },
+  { type: 'calendar_card', label: 'Calendar Card', category: 'Single' },
+  { type: 'weekly_list', label: 'Weekly List', category: 'Single' },
+  { type: 'description_card', label: 'Description Card', category: 'Single' },
+  { type: 'kilometres_bold', label: 'Kilometres Bold', category: 'Single' },
+  { type: 'trademark_style', label: 'Trademark Style', category: 'Single' },
+  { type: 'heart_pill', label: 'Heart Pill', category: 'Badge' },
+  { type: 'led_clock', label: 'LED Clock', category: 'Retro' },
+  { type: 'bold_location', label: 'Bold Location', category: 'Single' },
+  { type: 'route_number', label: 'Route + Number', category: 'Map' },
+  { type: 'app_widget', label: 'App Widget', category: 'Single' },
+  { type: 'money_tag', label: 'Money Tag', category: 'Badge' },
+  { type: 'multilingual', label: 'Multilingual', category: 'Single' },
+  { type: 'simple_table', label: 'Simple Table', category: 'Single' },
+  { type: 'repeat_text', label: 'Repeat Text', category: 'Single' },
+  { type: 'data_table', label: 'Data Table', category: 'Single' },
+  { type: 'bar_chart_pace', label: 'Bar Chart Pace', category: 'Chart' },
+  { type: 'location_card', label: 'Location Card', category: 'Single' },
+  { type: 'highlight_bar', label: 'Highlight Bar', category: 'Badge' },
+  { type: 'text_paragraph', label: 'Text Paragraph', category: 'Single' },
+  { type: 'pace_zones', label: 'Pace Zones', category: 'Chart' },
+  { type: 'elevation_area', label: 'Elevation Area', category: 'Chart' },
+  { type: 'map_route', label: 'Map Route', category: 'Map' },
+  // ── Recap Tags ──
+  { type: 'monthly_total', label: 'Monthly Total', category: 'Recap' },
+  { type: 'weekly_dots', label: 'Weekly Dots', category: 'Recap' },
+  { type: 'weekly_summary', label: 'Weekly Summary', category: 'Recap' },
+  { type: 'weekly_table', label: 'Weekly Table', category: 'Recap' },
+  { type: 'circle_grid', label: 'Circle Grid', category: 'Recap' },
+  { type: 'monthly_chart', label: 'Monthly Chart', category: 'Recap' },
+  { type: 'progress_pct', label: 'Progress Percentage', category: 'Recap' },
+  { type: 'area_chart_weekly', label: 'Area Chart Weekly', category: 'Recap' },
+  { type: 'dot_progress', label: 'Dot Progress', category: 'Recap' },
+  { type: 'square_progress', label: 'Square Progress', category: 'Recap' },
+  { type: 'vertical_bars', label: 'Vertical Bars Weekly', category: 'Recap' },
+  { type: 'stacked_days', label: 'Stacked Days', category: 'Recap' },
+  { type: 'running_total', label: 'Running Total', category: 'Recap' },
+  { type: 'weekly_map', label: 'Weekly Map', category: 'Recap' },
+  // ── Extra Unique Designs ──
+  { type: 'gradient_mesh', label: 'Gradient Mesh', category: 'Badge' },
+  { type: 'neo_brutalist', label: 'Neo Brutalist', category: 'Retro' },
+  { type: 'glass_card', label: 'Glass Card', category: 'Badge' },
+  { type: 'neon_glow', label: 'Neon Glow', category: 'Retro' },
+  { type: 'film_strip', label: 'Film Strip', category: 'Retro' },
+  { type: 'newspaper_column', label: 'Newspaper Column', category: 'Retro' },
+  { type: 'terminal_green', label: 'Terminal Green', category: 'Retro' },
+  { type: 'vhs_retro', label: 'VHS Retro', category: 'Retro' },
+  { type: 'notebook_line', label: 'Notebook Line', category: 'Single' },
+  { type: 'blueprint', label: 'Blueprint', category: 'Retro' },
+  { type: 'embossed', label: 'Embossed', category: 'Badge' },
+  { type: 'metallic', label: 'Metallic Plate', category: 'Badge' },
+  { type: 'pixel_art', label: 'Pixel Art', category: 'Retro' },
+  { type: 'achievement', label: 'Achievement', category: 'Badge' },
+  { type: 'leaderboard', label: 'Leaderboard', category: 'Chart' },
+  { type: 'countdown', label: 'Countdown', category: 'Single' },
+  { type: 'progress_ring', label: 'Progress Ring', category: 'Chart' },
+  { type: 'radial_chart', label: 'Radial Chart', category: 'Chart' },
+  { type: 'heatmap', label: 'Heatmap', category: 'Chart' },
+  { type: 'timeline', label: 'Timeline', category: 'Single' },
+  { type: 'tab_ui', label: 'Tab UI', category: 'Single' },
+  { type: 'card_stack', label: 'Card Stack', category: 'Badge' },
+  { type: 'ribbon', label: 'Ribbon', category: 'Badge' },
+  { type: 'notification', label: 'Notification', category: 'Single' },
+  { type: 'music_player', label: 'Music Player', category: 'Single' },
+  { type: 'weather_card', label: 'Weather Card', category: 'Single' },
+  { type: 'splits_bar_chart', label: 'Splits Bar Chart', category: 'Chart' },
+  { type: 'stacked_metrics', label: 'Stacked Metrics', category: 'Single' },
+  { type: 'running_man', label: 'Running Man', category: 'Single' },
+  { type: 'bordered_frame', label: 'Bordered Frame', category: 'Badge' },
+  { type: 'stat_ribbon', label: 'Stat Ribbon', category: 'Single' },
+  { type: 'dot_matrix', label: 'Dot Matrix', category: 'Retro' },
+  { type: 'badge_collection', label: 'Badge Collection', category: 'Badge' },
+  { type: 'mini_map', label: 'Mini Map', category: 'Map' },
 ];
-
-const STYLE_VARIANTS: Array<{ variant: StyleVariant; bg: string; text: string; border: string }> = [
-  { variant: 'default', bg: 'rgba(24,24,27,0.9)', text: '#ffffff', border: 'rgba(255,255,255,0.1)' },
-  { variant: 'neon', bg: '#09090b', text: '#00E5FF', border: '#00E5FF' },
-  { variant: 'cyberpunk', bg: '#0d0221', text: '#ff007f', border: '#ff007f' },
-  { variant: 'retro_gold', bg: '#1c1917', text: '#facc15', border: '#ca8a04' },
-  { variant: 'monochrome', bg: '#000000', text: '#ffffff', border: '#ffffff' },
-  { variant: 'pastel', bg: '#fef08a', text: '#1c1917', border: '#fde047' },
-  { variant: 'vivid_red', bg: '#450a0a', text: '#fca5a5', border: '#ef4444' },
-  { variant: 'ocean_blue', bg: '#0f172a', text: '#38bdf8', border: '#0284c7' },
-];
-
-// Generate 1000+ distinct template combinations dynamically
-const MASTER_SHARESTUDIO_TEMPLATES: TemplateItem[] = [];
-BASE_TEMPLATES.forEach((base) => {
-  STYLE_VARIANTS.forEach((v) => {
-    MASTER_SHARESTUDIO_TEMPLATES.push({
-      ...base,
-      label: `${base.label} (${v.variant.toUpperCase()})`,
-      variant: v.variant,
-    });
-  });
-});
 
 const ATHLETIC_ICONS = [
-  { icon: Flame, name: 'Calories Flame' },
+  { icon: Flame, name: 'Calories' },
   { icon: Heart, name: 'Heart Rate' },
-  { icon: Trophy, name: 'Trophy Winner' },
-  { icon: Medal, name: 'Medal Champion' },
-  { icon: MapPin, name: 'GPS Location' },
-  { icon: Zap, name: 'Speed Pace' },
-  { icon: Clock, name: 'Duration Clock' },
-  { icon: Shield, name: 'Endurance Shield' },
-  { icon: Flag, name: 'Finish Flag' },
-  { icon: Battery, name: 'Energy Battery' },
-  { icon: Check, name: 'Verified Check' },
-  { icon: Star, name: 'Star Award' },
-  { icon: Crown, name: 'Personal Record' },
-  { icon: Sparkles, name: 'Sparkles' },
-  { icon: Target, name: 'Target Pace' },
-  { icon: Compass, name: 'Trail Compass' },
-  { icon: Mountain, name: 'Elevation Peak' },
-  { icon: Activity, name: 'Pulse Activity' },
-  { icon: BarChart, name: 'Splits Chart' },
-  { icon: TrendingUp, name: 'Progress Trend' },
-  { icon: Award, name: 'Honor Award' },
-  { icon: Gauge, name: 'Speed Gauge' },
-  { icon: Timer, name: 'Stopwatch' },
-  { icon: Watch, name: 'Smart Watch' },
-  { icon: Navigation, name: 'Navigation Pin' },
-  { icon: Dumbbell, name: 'Strength Gym' },
-  { icon: Footprints, name: 'Trail Footprints' },
-  { icon: Bike, name: 'Cycling Ride' },
-  { icon: CircleDot, name: 'Lap Ring' },
-  { icon: Layers, name: 'Layer Stack' },
-  { icon: Box, name: 'Package Box' },
-  { icon: Tag, name: 'Price Tag' },
-  { icon: Ticket, name: 'Event Ticket' },
-  { icon: FileText, name: 'Log Document' },
-  { icon: Music, name: 'Run Playlist' },
-  { icon: Disc, name: 'Vinyl Mix' },
-  { icon: Radio, name: 'Live Broadcast' },
-  { icon: Plane, name: 'Flight Travel' },
-  { icon: Smile, name: 'Runner Smile' },
-  { icon: ThumbsUp, name: 'Kudos Like' },
-  { icon: Coffee, name: 'Post-Run Coffee' },
-  { icon: Sun, name: 'Morning Sun' },
-  { icon: Moon, name: 'Night Run Moon' },
-  { icon: Wind, name: 'Wind Speed' },
-  { icon: Thermometer, name: 'Temperature' },
-  { icon: CloudLightning, name: 'Storm Power' },
-  { icon: ShieldCheck, name: 'Safety Shield' },
-  { icon: CheckCircle2, name: 'Complete Check' },
-  { icon: AlertCircle, name: 'Warning Alert' },
-  { icon: AlertOctagon, name: 'Stop Sign' },
-  { icon: RefreshCw, name: 'Recovery Cycle' },
-  { icon: Eye, name: 'Focus View' },
-  { icon: Share2, name: 'Social Share' },
-  { icon: Copy, name: 'Duplicate Copy' },
-  { icon: Hexagon, name: 'Hexagon Badge' },
-  { icon: Octagon, name: 'Octagon Badge' },
-  { icon: Triangle, name: 'Triangle Badge' },
-  { icon: Square, name: 'Square Badge' },
-  { icon: Circle, name: 'Circle Badge' },
+  { icon: Trophy, name: 'Trophy' },
+  { icon: Medal, name: 'Medal' },
+  { icon: MapPin, name: 'Location' },
+  { icon: Zap, name: 'Speed' },
+  { icon: Clock, name: 'Clock' },
+  { icon: Shield, name: 'Shield' },
+  { icon: Flag, name: 'Flag' },
+  { icon: Battery, name: 'Battery' },
+  { icon: Check, name: 'Check' },
+  { icon: Star, name: 'Star' },
+  { icon: Crown, name: 'Crown' },
+  { icon: Sparkles, name: 'Sparkle' },
+  { icon: Target, name: 'Target' },
+  { icon: Compass, name: 'Compass' },
+  { icon: Mountain, name: 'Mountain' },
+  { icon: Activity, name: 'Pulse' },
+  { icon: BarChart, name: 'Chart' },
+  { icon: TrendingUp, name: 'Trend' },
+  { icon: Award, name: 'Award' },
+  { icon: Gauge, name: 'Gauge' },
+  { icon: Timer, name: 'Timer' },
+  { icon: Watch, name: 'Watch' },
+  { icon: Navigation, name: 'Nav' },
+  { icon: Dumbbell, name: 'Gym' },
+  { icon: Footprints, name: 'Footprints' },
+  { icon: Bike, name: 'Bike' },
+  { icon: CircleDot, name: 'Lap' },
+  { icon: Layers, name: 'Layers' },
 ];
 
 export function Sidebar({
@@ -222,7 +177,7 @@ export function Sidebar({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
 
-  const filteredTemplates = MASTER_SHARESTUDIO_TEMPLATES.filter((item) => {
+  const filteredTemplates = UNIQUE_TEMPLATES.filter((item) => {
     const matchesSearch = item.label.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -230,70 +185,45 @@ export function Sidebar({
 
   return (
     <aside className="w-80 border-r border-zinc-800 glass-panel flex flex-col h-[calc(100vh-4rem)] z-30">
-      {/* Unified Sidebar Tabs */}
+      {/* Tabs */}
       <div className="flex border-b border-zinc-800 text-xs font-semibold">
-        <button
-          onClick={() => setActiveTab('library')}
-          className={`flex-1 py-3 flex items-center justify-center gap-1.5 transition-colors border-b-2 ${
-            activeTab === 'library'
-              ? 'border-cyan-400 text-cyan-400 bg-zinc-800/50'
-              : 'border-transparent text-zinc-400 hover:text-zinc-200'
-          }`}
-        >
-          <LayoutGrid className="w-3.5 h-3.5" /> Library
-        </button>
-        <button
-          onClick={() => setActiveTab('icons')}
-          className={`flex-1 py-3 flex items-center justify-center gap-1.5 transition-colors border-b-2 ${
-            activeTab === 'icons'
-              ? 'border-cyan-400 text-cyan-400 bg-zinc-800/50'
-              : 'border-transparent text-zinc-400 hover:text-zinc-200'
-          }`}
-        >
-          <Shapes className="w-3.5 h-3.5" /> Icons
-        </button>
-        <button
-          onClick={() => setActiveTab('photo')}
-          className={`flex-1 py-3 flex items-center justify-center gap-1.5 transition-colors border-b-2 ${
-            activeTab === 'photo'
-              ? 'border-cyan-400 text-cyan-400 bg-zinc-800/50'
-              : 'border-transparent text-zinc-400 hover:text-zinc-200'
-          }`}
-        >
-          <ImageIcon className="w-3.5 h-3.5" /> Photo
-        </button>
-        <button
-          onClick={() => setActiveTab('metrics')}
-          className={`flex-1 py-3 flex items-center justify-center gap-1.5 transition-colors border-b-2 ${
-            activeTab === 'metrics'
-              ? 'border-cyan-400 text-cyan-400 bg-zinc-800/50'
-              : 'border-transparent text-zinc-400 hover:text-zinc-200'
-          }`}
-        >
-          <Sliders className="w-3.5 h-3.5" /> Data
-        </button>
+        {[
+          { key: 'library' as const, icon: LayoutGrid, label: 'Library' },
+          { key: 'icons' as const, icon: Shapes, label: 'Icons' },
+          { key: 'photo' as const, icon: ImageIcon, label: 'Photo' },
+          { key: 'metrics' as const, icon: Sliders, label: 'Data' },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`flex-1 py-3 flex items-center justify-center gap-1.5 transition-colors border-b-2 ${
+              activeTab === tab.key
+                ? 'border-cyan-400 text-cyan-400 bg-zinc-800/50'
+                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <tab.icon className="w-3.5 h-3.5" /> {tab.label}
+          </button>
+        ))}
       </div>
 
-      {/* Tab Content */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        {/* TAB 1: UNIFIED MASTER SHARESTUDIO LIBRARY (1000+ COMBINATIONS) */}
+        {/* TAB 1: LIBRARY — Structurally unique templates */}
         {activeTab === 'library' && (
           <div className="space-y-3">
-            {/* Search Input */}
             <div className="relative">
               <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search 1000+ templates & stickers..."
+                placeholder="Search templates..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-700 text-zinc-200 text-xs rounded-xl pl-8 pr-3 py-2 outline-none focus:border-cyan-400"
               />
             </div>
 
-            {/* Category Chips */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] scrollbar-none">
-              {['All', 'Tags', 'Parodies', 'Metrics', 'Retro', 'Editorial'].map((cat) => (
+              {['All', 'Single', 'Recap', 'Chart', 'Map', 'Badge', 'Retro'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
@@ -309,24 +239,16 @@ export function Sidebar({
             </div>
 
             <div className="text-[10px] text-zinc-400 font-mono">
-              Showing {filteredTemplates.length} distinct sticker presets
+              {filteredTemplates.length} unique templates
             </div>
 
-            {/* Visual Card Grid */}
             <div className="grid grid-cols-2 gap-2">
-              {filteredTemplates.slice(0, 100).map((item, idx) => {
-                const variantConfig = STYLE_VARIANTS.find((v) => v.variant === item.variant);
-                const customStyle = {
-                  ...DEFAULT_STYLES[item.type],
-                  backgroundColor: variantConfig?.bg || DEFAULT_STYLES[item.type].backgroundColor,
-                  textColor: variantConfig?.text || DEFAULT_STYLES[item.type].textColor,
-                  borderColor: variantConfig?.border || DEFAULT_STYLES[item.type].borderColor,
-                };
-
+              {filteredTemplates.map((item) => {
+                const customStyle = DEFAULT_STYLES[item.type] || DEFAULT_STYLES.receipt;
                 return (
                   <div
-                    key={`${item.type}_${item.variant}_${idx}`}
-                    onClick={() => onAddSticker(item.type, customStyle)}
+                    key={item.type}
+                    onClick={() => onAddSticker(item.type)}
                     className="group relative bg-zinc-950 border border-zinc-800 hover:border-cyan-500 rounded-xl p-2 cursor-pointer transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[110px] overflow-hidden shadow-lg"
                   >
                     <div className="scale-[0.42] origin-center transform-gpu pointer-events-none my-auto">
@@ -346,12 +268,10 @@ export function Sidebar({
           </div>
         )}
 
-        {/* TAB 2: ATHLETIC ICONS CATALOG */}
+        {/* TAB 2: ICONS */}
         {activeTab === 'icons' && (
           <div className="space-y-3">
-            <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
-              ShareStudio Athletic Icons (60+ Shapes)
-            </h3>
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Athletic Icons</h3>
             <div className="grid grid-cols-4 gap-2">
               {ATHLETIC_ICONS.map((item, idx) => {
                 const IconComp = item.icon;
@@ -363,7 +283,7 @@ export function Sidebar({
                     title={item.name}
                   >
                     <IconComp className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
-                    <span className="text-[9px] text-zinc-400 truncate w-full text-center">{item.name.split(' ')[0]}</span>
+                    <span className="text-[9px] text-zinc-400 truncate w-full text-center">{item.name}</span>
                   </div>
                 );
               })}
@@ -371,77 +291,48 @@ export function Sidebar({
           </div>
         )}
 
-        {/* TAB 3: PHOTO CONTROLS */}
+        {/* TAB 3: PHOTO */}
         {activeTab === 'photo' && (
-          <PhotoControls
-            background={background}
-            onUpdateBackground={onUpdateBackground}
-          />
+          <PhotoControls background={background} onUpdateBackground={onUpdateBackground} />
         )}
 
-        {/* TAB 4: MANUAL METRICS EDITOR */}
+        {/* TAB 4: METRICS EDITOR */}
         {activeTab === 'metrics' && (
           <div className="space-y-3 text-xs">
-            <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">
-              Edit Run Telemetry Data
-            </h3>
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Edit Run Data</h3>
             <div>
               <label className="block text-zinc-400 mb-1">Run Title</label>
-              <input
-                type="text"
-                value={metrics.title}
-                onChange={(e) => setMetrics({ ...metrics, title: e.target.value })}
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500"
-              />
+              <input type="text" value={metrics.title} onChange={(e) => setMetrics({ ...metrics, title: e.target.value })}
+                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="block text-zinc-400 mb-1">Distance (KM)</label>
-                <input
-                  type="text"
-                  value={metrics.distance}
-                  onChange={(e) => setMetrics({ ...metrics, distance: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500"
-                />
+                <input type="text" value={metrics.distance} onChange={(e) => setMetrics({ ...metrics, distance: e.target.value })}
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
               </div>
               <div>
-                <label className="block text-zinc-400 mb-1">Avg Pace (/KM)</label>
-                <input
-                  type="text"
-                  value={metrics.pace}
-                  onChange={(e) => setMetrics({ ...metrics, pace: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500"
-                />
+                <label className="block text-zinc-400 mb-1">Pace (/KM)</label>
+                <input type="text" value={metrics.pace} onChange={(e) => setMetrics({ ...metrics, pace: e.target.value })}
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="block text-zinc-400 mb-1">Duration</label>
-                <input
-                  type="text"
-                  value={metrics.time}
-                  onChange={(e) => setMetrics({ ...metrics, time: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500"
-                />
+                <input type="text" value={metrics.time} onChange={(e) => setMetrics({ ...metrics, time: e.target.value })}
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
               </div>
               <div>
-                <label className="block text-zinc-400 mb-1">Heart Rate (BPM)</label>
-                <input
-                  type="text"
-                  value={metrics.heartRate}
-                  onChange={(e) => setMetrics({ ...metrics, heartRate: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500"
-                />
+                <label className="block text-zinc-400 mb-1">Heart Rate</label>
+                <input type="text" value={metrics.heartRate} onChange={(e) => setMetrics({ ...metrics, heartRate: e.target.value })}
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
               </div>
             </div>
             <div>
               <label className="block text-zinc-400 mb-1">Location</label>
-              <input
-                type="text"
-                value={metrics.location}
-                onChange={(e) => setMetrics({ ...metrics, location: e.target.value })}
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500"
-              />
+              <input type="text" value={metrics.location} onChange={(e) => setMetrics({ ...metrics, location: e.target.value })}
+                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
             </div>
           </div>
         )}
