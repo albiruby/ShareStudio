@@ -245,8 +245,6 @@ export function Sidebar({
   const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
   const [selectedVariant, setSelectedVariant] = React.useState<string>('All');
 
-  // Generate ALL combinations: 90 templates × 11 variants = 990 designs
-  // INTERLEAVE: variant-first order so every adjacent card is a DIFFERENT template
   const allDesigns: Array<{
     type: StickerType;
     label: string;
@@ -287,11 +285,11 @@ export function Sidebar({
   };
 
   return (
-    <aside className="w-80 border-r border-zinc-800 glass-panel flex flex-col h-[calc(100vh-4rem)] z-30">
+    <aside className="w-[340px] border-r border-zinc-800/80 glass-panel flex flex-col h-[calc(100vh-4rem)] z-30">
       {/* Tabs */}
-      <div className="flex border-b border-zinc-800 text-xs font-semibold">
+      <div className="flex border-b border-zinc-800/60 text-[11px] font-semibold">
         {[
-          { key: 'library' as const, icon: LayoutGrid, label: `Library (${allDesigns.length})` },
+          { key: 'library' as const, icon: LayoutGrid, label: `Library`, count: allDesigns.length },
           { key: 'icons' as const, icon: Shapes, label: 'Icons' },
           { key: 'photo' as const, icon: ImageIcon, label: 'Photo' },
           { key: 'metrics' as const, icon: Sliders, label: 'Data' },
@@ -299,43 +297,47 @@ export function Sidebar({
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 py-3 flex items-center justify-center gap-1.5 transition-colors border-b-2 ${
+            className={`flex-1 py-3.5 flex items-center justify-center gap-1.5 transition-all border-b-2 ${
               activeTab === tab.key
-                ? 'border-cyan-400 text-cyan-400 bg-zinc-800/50'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-cyan-400 text-cyan-400 bg-cyan-400/5'
+                : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/30'
             }`}
           >
-            <tab.icon className="w-3.5 h-3.5" /> {tab.label}
+            <tab.icon className="w-3.5 h-3.5" />
+            <span>{tab.label}</span>
+            {tab.count && (
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono">{tab.count}</span>
+            )}
           </button>
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        {/* TAB 1: LIBRARY — 90 templates × 11 variants = 990 designs */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+        {/* TAB 1: LIBRARY */}
         {activeTab === 'library' && (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {/* Search */}
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder={`Search ${allDesigns.length} designs...`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-zinc-900 border border-zinc-700 text-zinc-200 text-xs rounded-xl pl-8 pr-3 py-2 outline-none focus:border-cyan-400"
+                className="w-full bg-zinc-900/80 border border-zinc-700/50 text-zinc-200 text-xs rounded-xl pl-10 pr-4 py-2.5 outline-none focus:border-cyan-500/50 focus:bg-zinc-900 transition-all placeholder:text-zinc-600"
               />
             </div>
 
             {/* Category Chips */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] scrollbar-none">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 text-[11px] scrollbar-none">
               {['All', 'Single', 'Recap', 'Chart', 'Map', 'Badge', 'Retro'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-colors border ${
+                  className={`px-3 py-1.5 rounded-full whitespace-nowrap transition-all border ${
                     selectedCategory === cat
-                      ? 'bg-cyan-500 text-black border-cyan-400 font-bold'
-                      : 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-white'
+                      ? 'bg-cyan-500 text-black border-cyan-400 font-bold shadow-lg shadow-cyan-500/20'
+                      : 'bg-zinc-800/60 text-zinc-400 border-zinc-700/50 hover:text-white hover:bg-zinc-700/60'
                   }`}
                 >
                   {cat}
@@ -344,13 +346,13 @@ export function Sidebar({
             </div>
 
             {/* Variant Chips */}
-            <div className="flex items-center gap-1 overflow-x-auto pb-1 text-[10px] scrollbar-none">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[10px] scrollbar-none">
               <button
                 onClick={() => setSelectedVariant('All')}
-                className={`px-2 py-0.5 rounded-full whitespace-nowrap transition-colors border ${
+                className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-all border ${
                   selectedVariant === 'All'
-                    ? 'bg-white text-black font-bold'
-                    : 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-white'
+                    ? 'bg-white text-black font-bold shadow-lg'
+                    : 'bg-zinc-800/60 text-zinc-400 border-zinc-700/50 hover:text-white'
                 }`}
               >
                 All Styles
@@ -359,10 +361,10 @@ export function Sidebar({
                 <button
                   key={v.id}
                   onClick={() => setSelectedVariant(v.id)}
-                  className={`px-2 py-0.5 rounded-full whitespace-nowrap transition-colors border flex items-center gap-1 ${
+                  className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-all border flex items-center gap-1.5 ${
                     selectedVariant === v.id
-                      ? 'font-bold border-white'
-                      : 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-white'
+                      ? 'font-bold border-white shadow-lg'
+                      : 'bg-zinc-800/60 text-zinc-400 border-zinc-700/50 hover:text-white'
                   }`}
                   style={selectedVariant === v.id ? { backgroundColor: v.accent, color: v.bg, borderColor: v.accent } : {}}
                 >
@@ -372,39 +374,40 @@ export function Sidebar({
               ))}
             </div>
 
-            <div className="text-[10px] text-zinc-400 font-mono">
-              {filteredDesigns.length} unique designs shown
+            <div className="flex items-center justify-between text-[10px] text-zinc-500 font-mono">
+              <span>{filteredDesigns.length} unique designs</span>
+              <span className="text-zinc-600">Click to add</span>
             </div>
 
             {/* Design Cards Grid */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {filteredDesigns.slice(0, 1000).map((design) => (
                 <div
                   key={`${design.type}_${design.variant.id}`}
                   onClick={() => onAddSticker(design.type, getStyleForVariant(design.type, design.variant))}
-                  className="group relative border hover:border-cyan-500 p-2 cursor-pointer transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[110px] overflow-hidden shadow-lg"
+                  className="group relative border hover:border-cyan-500/60 p-3 cursor-pointer transition-all duration-200 hover:scale-[1.03] hover:shadow-xl hover:shadow-cyan-500/10 flex flex-col items-center justify-center min-h-[140px] overflow-hidden"
                   style={{
                     backgroundColor: design.variant.bg,
                     borderColor: design.variant.border,
                     borderRadius: design.variant.borderRadius,
                   }}
                 >
-                  <div className="scale-[0.42] origin-center transform-gpu pointer-events-none my-auto">
+                  <div className="scale-[0.45] origin-center transform-gpu pointer-events-none my-auto">
                     <StickerRenderer
                       type={design.type}
                       metrics={metrics}
                       style={getStyleForVariant(design.type, design.variant)}
                     />
                   </div>
-                  <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full border" style={{ backgroundColor: design.variant.accent, borderColor: design.variant.border }} />
-                  <div className="absolute inset-x-0 bottom-0 py-1 text-center border-t opacity-90 group-hover:opacity-100 transition-all"
+                  <div className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full border" style={{ backgroundColor: design.variant.accent, borderColor: design.variant.border }} />
+                  <div className="absolute inset-x-0 bottom-0 py-1.5 text-center border-t opacity-90 group-hover:opacity-100 transition-all"
                     style={{
                       backgroundColor: design.variant.accent,
                       color: design.variant.bg,
                       borderColor: design.variant.border,
                     }}
                   >
-                    <span className="text-[9px] font-bold truncate px-1 block"
+                    <span className="text-[9px] font-bold truncate px-1.5 block"
                       style={{
                         fontFamily: design.variant.fontFamily,
                         letterSpacing: design.variant.letterSpacing,
@@ -417,7 +420,7 @@ export function Sidebar({
             </div>
 
             {filteredDesigns.length > 1000 && (
-              <div className="text-center text-[10px] text-zinc-500 py-2">
+              <div className="text-center text-[10px] text-zinc-500 py-3">
                 Showing 1000 of {filteredDesigns.length} designs. Use filters to narrow down.
               </div>
             )}
@@ -426,20 +429,20 @@ export function Sidebar({
 
         {/* TAB 2: ICONS */}
         {activeTab === 'icons' && (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Athletic Icons (30)</h3>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2.5">
               {ATHLETIC_ICONS.map((item, idx) => {
                 const IconComp = item.icon;
                 return (
                   <div
                     key={idx}
                     onClick={() => onAddSticker('runner_bold')}
-                    className="p-3 bg-zinc-900 border border-zinc-800 hover:border-cyan-400 hover:bg-zinc-800 rounded-xl cursor-pointer flex flex-col items-center justify-center gap-1 transition-all group"
+                    className="p-4 bg-zinc-900/60 border border-zinc-800/60 hover:border-cyan-400/50 hover:bg-zinc-800/80 rounded-xl cursor-pointer flex flex-col items-center justify-center gap-2 transition-all duration-200 group hover:shadow-lg hover:shadow-cyan-500/10"
                     title={item.name}
                   >
                     <IconComp className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
-                    <span className="text-[9px] text-zinc-400 truncate w-full text-center">{item.name}</span>
+                    <span className="text-[9px] text-zinc-400 truncate w-full text-center group-hover:text-zinc-300">{item.name}</span>
                   </div>
                 );
               })}
@@ -454,41 +457,41 @@ export function Sidebar({
 
         {/* TAB 4: METRICS EDITOR */}
         {activeTab === 'metrics' && (
-          <div className="space-y-3 text-xs">
-            <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Edit Run Data</h3>
+          <div className="space-y-4 text-xs">
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-3">Edit Run Data</h3>
             <div>
-              <label className="block text-zinc-400 mb-1">Run Title</label>
+              <label className="block text-zinc-400 mb-1.5 text-[11px]">Run Title</label>
               <input type="text" value={metrics.title} onChange={(e) => setMetrics({ ...metrics, title: e.target.value })}
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
+                className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-zinc-400 mb-1">Distance (KM)</label>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Distance (KM)</label>
                 <input type="text" value={metrics.distance} onChange={(e) => setMetrics({ ...metrics, distance: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
               </div>
               <div>
-                <label className="block text-zinc-400 mb-1">Pace (/KM)</label>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Pace (/KM)</label>
                 <input type="text" value={metrics.pace} onChange={(e) => setMetrics({ ...metrics, pace: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-zinc-400 mb-1">Duration</label>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Duration</label>
                 <input type="text" value={metrics.time} onChange={(e) => setMetrics({ ...metrics, time: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
               </div>
               <div>
-                <label className="block text-zinc-400 mb-1">Heart Rate</label>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Heart Rate</label>
                 <input type="text" value={metrics.heartRate} onChange={(e) => setMetrics({ ...metrics, heartRate: e.target.value })}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
               </div>
             </div>
             <div>
-              <label className="block text-zinc-400 mb-1">Location</label>
+              <label className="block text-zinc-400 mb-1.5 text-[11px]">Location</label>
               <input type="text" value={metrics.location} onChange={(e) => setMetrics({ ...metrics, location: e.target.value })}
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white outline-none focus:border-cyan-500" />
+                className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
             </div>
           </div>
         )}

@@ -219,7 +219,7 @@ export default function Home() {
           onLayerDown={handleLayerDown}
         />
 
-        <div className="w-64 border-l border-zinc-800 glass-panel p-3 overflow-y-auto hidden lg:block">
+        <div className="w-72 border-l border-zinc-800/60 glass-panel p-4 overflow-y-auto hidden lg:block">
           <InspectorPanel
             selectedSticker={selectedSticker}
             onUpdateSticker={handleUpdateSticker}

@@ -56,11 +56,11 @@ export function CanvasStudio({
   return (
     <div
       onClick={() => onSelectSticker(null)}
-      className="flex-1 flex items-center justify-center p-4 overflow-auto relative bg-dark-900 bg-[radial-gradient(#1c1c21_1px,transparent_1px)] [background-size:16px_16px]"
+      className="flex-1 flex items-center justify-center p-6 overflow-auto relative bg-dark-900 bg-[radial-gradient(#1c1c21_1px,transparent_1px)] [background-size:16px_16px]"
     >
       <div
         ref={canvasRef}
-        className={`relative overflow-hidden shadow-2xl transition-all duration-300 border border-zinc-800 rounded-2xl ${getAspectRatioDimensions()}`}
+        className={`relative overflow-hidden shadow-2xl transition-all duration-300 border border-zinc-800/80 rounded-2xl ${getAspectRatioDimensions()}`}
         style={{
           background: background.gradientPreset
             ? background.gradientPreset
