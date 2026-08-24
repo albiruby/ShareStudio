@@ -1,5 +1,31 @@
 import { ActivityMetrics, StickerStyle, StickerType } from './types';
 
+// ─── 11 DISTINCT VISUAL MOOD VARIANTS ──────────────────────
+// Each variant creates a completely different visual feel
+export interface StyleVariant {
+  id: string;
+  label: string;
+  bg: string;
+  text: string;
+  accent: string;
+  border: string;
+  mood: string;
+}
+
+export const STYLE_VARIANTS: StyleVariant[] = [
+  { id: 'default',    label: 'Default',     bg: '#18181b', text: '#ffffff', accent: '#00E5FF', border: '#27272a', mood: 'dark' },
+  { id: 'neon',       label: 'Neon',        bg: '#050515', text: '#00ffcc', accent: '#00ffcc', border: '#00ffcc', mood: 'glow' },
+  { id: 'cyberpunk',  label: 'Cyberpunk',   bg: '#0d0221', text: '#ff007f', accent: '#ff007f', border: '#ff007f', mood: 'neon' },
+  { id: 'gold',       label: 'Retro Gold',  bg: '#1c1917', text: '#facc15', accent: '#f59e0b', border: '#ca8a04', mood: 'warm' },
+  { id: 'mono',       label: 'Monochrome',  bg: '#000000', text: '#ffffff', accent: '#ffffff', border: '#ffffff', mood: 'clean' },
+  { id: 'pastel',     label: 'Pastel',      bg: '#fef08a', text: '#1c1917', accent: '#fde047', border: '#fde047', mood: 'soft' },
+  { id: 'crimson',    label: 'Crimson',     bg: '#450a0a', text: '#fca5a5', accent: '#ef4444', border: '#ef4444', mood: 'bold' },
+  { id: 'ocean',      label: 'Ocean',       bg: '#0c4a6e', text: '#e0f2fe', accent: '#38bdf8', border: '#0284c7', mood: 'cool' },
+  { id: 'forest',     label: 'Forest',      bg: '#022c22', text: '#d1fae5', accent: '#34d399', border: '#059669', mood: 'nature' },
+  { id: 'sunset',     label: 'Sunset',      bg: '#431407', text: '#ffedd5', accent: '#fb923c', border: '#ea580c', mood: 'warm' },
+  { id: 'midnight',   label: 'Midnight',    bg: '#1e1b4b', text: '#e0e7ff', accent: '#818cf8', border: '#6366f1', mood: 'elegant' },
+];
+
 export const DEFAULT_METRICS: ActivityMetrics = {
   title: 'Morning Run',
   distance: '8.43',
