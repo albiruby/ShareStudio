@@ -23,6 +23,7 @@ interface CanvasProps {
   onDuplicateSticker: (id: string) => void;
   onLayerUp: (id: string) => void;
   onLayerDown: (id: string) => void;
+  onUpdateMetrics: (metrics: ActivityMetrics) => void;
 }
 
 export function CanvasStudio({
@@ -38,6 +39,7 @@ export function CanvasStudio({
   onDuplicateSticker,
   onLayerUp,
   onLayerDown,
+  onUpdateMetrics,
 }: CanvasProps) {
   // Dimensions helper
   const getAspectRatioDimensions = () => {
@@ -120,7 +122,7 @@ export function CanvasStudio({
               metrics={metrics}
               style={sticker.style}
               onEditField={(field, value) => {
-                const newMetrics = { ...metrics, [field]: value };
+                onUpdateMetrics({ ...metrics, [field]: value });
               }}
             />
           </EditableWrapper>

@@ -266,6 +266,7 @@ export default function Home() {
           onDuplicateSticker={handleDuplicateSticker}
           onLayerUp={handleLayerUp}
           onLayerDown={handleLayerDown}
+          onUpdateMetrics={setMetrics}
         />
 
         <div className="w-72 border-l border-zinc-800/60 glass-panel p-4 overflow-y-auto hidden lg:block">
