@@ -538,9 +538,38 @@ export function Sidebar({
                   className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Elevation (m)</label>
+                <input type="text" value={metrics.elevation} onChange={(e) => setMetrics({ ...metrics, elevation: e.target.value })}
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
+              </div>
+              <div>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Calories</label>
+                <input type="text" value={metrics.calories} onChange={(e) => setMetrics({ ...metrics, calories: e.target.value })}
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
+              </div>
+            </div>
             <div>
               <label className="block text-zinc-400 mb-1.5 text-[11px]">Location</label>
               <input type="text" value={metrics.location} onChange={(e) => setMetrics({ ...metrics, location: e.target.value })}
+                className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Date</label>
+                <input type="text" value={metrics.date} onChange={(e) => setMetrics({ ...metrics, date: e.target.value })}
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
+              </div>
+              <div>
+                <label className="block text-zinc-400 mb-1.5 text-[11px]">Time of Day</label>
+                <input type="text" value={metrics.timeOfDay} onChange={(e) => setMetrics({ ...metrics, timeOfDay: e.target.value })}
+                  className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-zinc-400 mb-1.5 text-[11px]">Gear</label>
+              <input type="text" value={metrics.gear} onChange={(e) => setMetrics({ ...metrics, gear: e.target.value })}
                 className="w-full bg-zinc-900/80 border border-zinc-700/50 rounded-xl p-2.5 text-white outline-none focus:border-cyan-500/50 transition-all" />
             </div>
           </div>

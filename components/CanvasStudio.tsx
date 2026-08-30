@@ -53,6 +53,23 @@ export function CanvasStudio({
     }
   };
 
+  const getFilterStyle = (): string => {
+    switch (background.filter) {
+      case 'dark_mood':
+        return 'saturate(0.8) contrast(1.1) brightness(0.85)';
+      case 'portra':
+        return 'saturate(1.2) contrast(1.05) sepia(0.15)';
+      case 'vintage_bw':
+        return 'grayscale(1) contrast(1.1) brightness(0.95)';
+      case 'sepia':
+        return 'sepia(0.6) saturate(1.2) contrast(1.05)';
+      case 'fisheye':
+        return 'saturate(1.3) contrast(1.15) brightness(0.9)';
+      default:
+        return 'none';
+    }
+  };
+
   return (
     <div
       onClick={() => onSelectSticker(null)}
@@ -72,7 +89,8 @@ export function CanvasStudio({
           <img
             src={background.imageUrl}
             alt="User Background"
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-300"
+            style={{ filter: getFilterStyle() }}
           />
         )}
 
@@ -102,8 +120,7 @@ export function CanvasStudio({
               metrics={metrics}
               style={sticker.style}
               onEditField={(field, value) => {
-                // Update metrics directly
-                metrics[field as keyof ActivityMetrics] = value as any;
+                const newMetrics = { ...metrics, [field]: value };
               }}
             />
           </EditableWrapper>

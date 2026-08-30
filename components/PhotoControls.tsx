@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BackgroundSettings } from '@/lib/types';
-import { Image as ImageIcon, Sliders, Trash2, Sun, Moon } from 'lucide-react';
+import { Image as ImageIcon, Trash2, Moon, Sun, Aperture } from 'lucide-react';
 
 interface PhotoProps {
   background: BackgroundSettings;
@@ -15,6 +15,20 @@ const GRADIENT_PRESETS = [
   'linear-gradient(135deg, #022c22 0%, #09090b 100%)',
   'linear-gradient(135deg, #3b0764 0%, #09090b 100%)',
   'linear-gradient(135deg, #18181b 0%, #09090b 100%)',
+];
+
+const FILTER_PRESETS: Array<{
+  id: BackgroundSettings['filter'];
+  label: string;
+  icon: typeof Sun;
+  description: string;
+}> = [
+  { id: 'normal', label: 'Normal', icon: Aperture, description: 'No filter' },
+  { id: 'dark_mood', label: 'Dark Mood', icon: Moon, description: 'Desaturated & dark' },
+  { id: 'portra', label: 'Portra', icon: Sun, description: 'Warm film tones' },
+  { id: 'vintage_bw', label: 'B&W Film', icon: Aperture, description: 'Classic black & white' },
+  { id: 'sepia', label: 'Sepia', icon: Sun, description: 'Warm vintage tint' },
+  { id: 'fisheye', label: 'Vivid', icon: Aperture, description: 'High contrast & saturated' },
 ];
 
 export function PhotoControls({ background, onUpdateBackground }: PhotoProps) {
@@ -34,16 +48,16 @@ export function PhotoControls({ background, onUpdateBackground }: PhotoProps) {
   };
 
   return (
-    <div className="space-y-4 text-xs">
+    <div className="space-y-5 text-xs">
       {/* Upload Local Photo */}
       <div>
         <label className="block text-[11px] text-zinc-400 font-semibold mb-2">
-          Upload Photo Background (0% Server Upload)
+          Upload Photo Background (100% Client-Side)
         </label>
         <div className="flex items-center gap-2">
-          <label className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg cursor-pointer transition-colors border border-zinc-700">
+          <label className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl cursor-pointer transition-all border border-zinc-700/50 hover:border-cyan-500/30">
             <ImageIcon className="w-4 h-4 text-cyan-400" />
-            <span>Select Local Photo</span>
+            <span className="text-[11px]">Select Local Photo</span>
             <input
               type="file"
               accept="image/*"
@@ -60,7 +74,7 @@ export function PhotoControls({ background, onUpdateBackground }: PhotoProps) {
                   imageUrl: null,
                 })
               }
-              className="p-2 bg-red-950/80 hover:bg-red-900 text-red-400 rounded-lg border border-red-800"
+              className="p-2.5 bg-red-950/80 hover:bg-red-900 text-red-400 rounded-xl border border-red-800/50 transition-all"
               title="Remove Photo"
             >
               <Trash2 className="w-4 h-4" />
@@ -70,12 +84,12 @@ export function PhotoControls({ background, onUpdateBackground }: PhotoProps) {
       </div>
 
       {/* Dimmer Overlay Slider */}
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <div className="flex justify-between text-[11px] text-zinc-400">
-          <span className="flex items-center gap-1">
-            <Moon className="w-3.5 h-3.5 text-zinc-400" /> Dark Dimmer Overlay
+          <span className="flex items-center gap-1.5">
+            <Moon className="w-3.5 h-3.5 text-zinc-400" /> Dark Dimmer
           </span>
-          <span>{Math.round(background.dimmerOverlay * 100)}%</span>
+          <span className="text-zinc-300 font-mono">{Math.round(background.dimmerOverlay * 100)}%</span>
         </div>
         <input
           type="range"
@@ -89,9 +103,37 @@ export function PhotoControls({ background, onUpdateBackground }: PhotoProps) {
               dimmerOverlay: parseFloat(e.target.value),
             })
           }
-          className="w-full accent-cyan-400 bg-zinc-800 h-1.5 rounded cursor-pointer"
+          className="w-full accent-cyan-400 bg-zinc-800/80 h-1.5 rounded-full cursor-pointer"
         />
       </div>
+
+      {/* Photo Filters */}
+      {background.imageUrl && (
+        <div className="space-y-2">
+          <label className="block text-[11px] text-zinc-400 font-semibold">
+            Photo Filter
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {FILTER_PRESETS.map((f) => {
+              const Icon = f.icon;
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => onUpdateBackground({ ...background, filter: f.id })}
+                  className={`p-2.5 rounded-xl border text-center transition-all ${
+                    background.filter === f.id
+                      ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-400'
+                      : 'bg-zinc-900/50 border-zinc-800/60 text-zinc-400 hover:text-white hover:border-zinc-700'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5 mx-auto mb-1" />
+                  <span className="text-[9px] font-semibold block">{f.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Background Gradients */}
       <div className="space-y-2">
@@ -109,7 +151,7 @@ export function PhotoControls({ background, onUpdateBackground }: PhotoProps) {
                   gradientPreset: grad,
                 })
               }
-              className="flex-1 h-8 rounded-lg border border-zinc-700 hover:scale-105 transition-transform"
+              className="flex-1 h-9 rounded-xl border border-zinc-700/50 hover:scale-105 transition-all hover:shadow-lg"
               style={{ background: grad }}
             />
           ))}

@@ -160,23 +160,71 @@ export default function Home() {
     }
   };
 
+  const [isDownloading, setIsDownloading] = React.useState(false);
+
   const handleDownloadPNG = async () => {
     if (!canvasRef.current) return;
+    setIsDownloading(true);
     const previousSelected = selectedId;
     setSelectedId(null);
 
     await new Promise((r) => setTimeout(r, 100));
     await downloadCanvasImage(canvasRef.current, `sharestudio-${metrics.distance}km.png`);
     setSelectedId(previousSelected);
+    setIsDownloading(false);
     showToast('Downloaded high-res story PNG');
   };
 
   const selectedSticker = stickers.find((s) => s.id === selectedId) || null;
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedId) return;
+
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        handleDeleteSticker(selectedId);
+      }
+      if (e.key === 'Escape') {
+        setSelectedId(null);
+      }
+      if (e.key === 'd' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        handleDuplicateSticker(selectedId);
+      }
+
+      const nudge = e.shiftKey ? 10 : 2;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const s = stickers.find((s) => s.id === selectedId);
+        if (s) handleUpdateSticker({ ...s, x: s.x - nudge });
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const s = stickers.find((s) => s.id === selectedId);
+        if (s) handleUpdateSticker({ ...s, x: s.x + nudge });
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const s = stickers.find((s) => s.id === selectedId);
+        if (s) handleUpdateSticker({ ...s, y: s.y - nudge });
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const s = stickers.find((s) => s.id === selectedId);
+        if (s) handleUpdateSticker({ ...s, y: s.y + nudge });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedId, stickers]);
+
   return (
     <div className="min-h-screen flex flex-col bg-dark-900 text-zinc-100">
       {toastMessage && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 bg-cyan-500 text-black font-extrabold px-4 py-2 rounded-xl shadow-2xl z-50 animate-bounce text-xs">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 text-zinc-100 font-semibold px-5 py-3 rounded-2xl shadow-2xl z-50 text-xs flex items-center gap-2 toast-enter">
+          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
           {toastMessage}
         </div>
       )}
@@ -192,6 +240,7 @@ export default function Home() {
         onResetCanvas={handleResetCanvas}
         onOpenTextSnippets={() => setIsTextModalOpen(true)}
         isCopying={isCopying}
+        isDownloading={isDownloading}
         hasSelectedSticker={selectedId !== null}
       />
 

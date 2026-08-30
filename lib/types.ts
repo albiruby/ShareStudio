@@ -176,7 +176,6 @@ export type StickerType =
   | 'tabbed_card'
   | 'accordion'
   | 'split_diagonal'
-  | 'circle_grid'
   | 'dot_pattern'
   | 'cross_stitch'
   | 'chevron_rows'

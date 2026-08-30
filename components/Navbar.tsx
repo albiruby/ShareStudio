@@ -26,6 +26,7 @@ interface NavbarProps {
   onResetCanvas: () => void;
   onOpenTextSnippets: () => void;
   isCopying: boolean;
+  isDownloading?: boolean;
   hasSelectedSticker?: boolean;
 }
 
@@ -40,6 +41,7 @@ export function Navbar({
   onResetCanvas,
   onOpenTextSnippets,
   isCopying,
+  isDownloading,
   hasSelectedSticker,
 }: NavbarProps) {
   return (
@@ -143,10 +145,11 @@ export function Navbar({
         {/* Download PNG */}
         <button
           onClick={onDownloadPNG}
-          className="px-4 py-2 bg-zinc-800/50 hover:bg-zinc-700/60 text-white font-medium text-xs rounded-xl border border-zinc-700/50 flex items-center gap-1.5 transition-all hover:text-white"
+          disabled={isDownloading}
+          className="px-4 py-2 bg-zinc-800/50 hover:bg-zinc-700/60 text-white font-medium text-xs rounded-xl border border-zinc-700/50 flex items-center gap-1.5 transition-all hover:text-white active:scale-95 disabled:opacity-50"
         >
           <Download className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Download</span>
+          <span className="hidden sm:inline">{isDownloading ? 'Saving...' : 'Download'}</span>
         </button>
       </div>
     </header>
